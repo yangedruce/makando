@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
-use App\Events\RegisteredRestaurant;
 
 class RestaurantRegistrationController extends Controller
 {
@@ -50,7 +49,6 @@ class RestaurantRegistrationController extends Controller
         ]);
 
         event(new Registered($user));
-        // event(new RegisteredRestaurant($user));
 
         Auth::login($user);
 
