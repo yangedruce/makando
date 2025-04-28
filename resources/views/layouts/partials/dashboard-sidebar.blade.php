@@ -3,38 +3,45 @@
         [
             'title' => __('Dashboard'),
             'route' => 'dashboard',
+            'permissions' => ['dashboard:read'],
         ],
         [
             'title' => __('Shop'),
             'route' => 'dashboard.shop.index',
+            'permissions' => ['shop:read'],
         ],
         [
             'title' => __('Orders'),
-            // 'permissions' => ['restaurant-approval:read', 'customer:read', 'activity-log:read'],
+            'permissions' => ['order:read'],
         ],
         [
             'title' => __('Order History'),
             'route' => 'dashboard.order.index',
+            'permissions' => ['order:read'],
         ],
         [
             'title' => __('Upcoming Order'),
             'route' => 'dashboard.order.orderApproval',
+            'permissions' => ['order:update'],
         ],
         [
             'title' => __('Managements'),
-            // 'permissions' => ['restaurant-approval:read', 'customer:read', 'activity-log:read'],
+            'permissions' => ['customer:read', 'restaurant:read', 'restaurant-approval:read','category:read','menu:read','item:read'],
         ],
         [
             'title' => __('Customer'),
             'route' => 'dashboard.management.customer.index',
+            'permissions' => ['customer:read'],
         ],
         [
             'title' => __('Restaurant'),
             'route' => 'dashboard.management.restaurant.index',
+            'permissions' => ['restaurant:read'],
         ],
         [
             'title' => __('Restaurant Category'),
             'route' => 'dashboard.management.category.index',
+            'permissions' => ['category:read'],
         ],
         [
             'title' => __('Restaurant Approval'),
@@ -44,10 +51,12 @@
         [
             'title' => __('Menu'),
             'route' => 'dashboard.management.menu.index',
+            'permissions' => ['menu:read'],
         ],
         [
             'title' => __('Menu Type'),
             'route' => 'dashboard.management.type.index',
+            'permissions' => ['type:read'],
         ],
         [
             'title' => __('Configurations'),

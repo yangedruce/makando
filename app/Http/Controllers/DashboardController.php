@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Order;
 use App\Models\Customer;
+use App\Models\User;
 use App\Models\Restaurant;
 use Carbon\Carbon;
 
@@ -19,62 +20,52 @@ class DashboardController extends Controller
     public function index()
     {
         $today = Carbon::today();
+        $user = Auth::user();
 
-        $overallSales = Order::where('payment_status', 'Paid')
-            ->where('status', 'Completed')
-            ->whereHas('orderItems')
-            ->sum('total_price');
+        if ($user->hasRole('Admin')) {
+            return view('dashboard.index', [
+                'role' => 'Admin',
+                'overallSales' => Order::paid()->completed()->withItems()->sum('total_price'),
+                'todaySales' => Order::paid()->completed()->withItems()->whereDate('created_at', $today)->sum('total_price'),
+                'overallOrders' => Order::paid()->completed()->withItems()->count(),
+                'todayOrders' => Order::paid()->completed()->withItems()->whereDate('created_at', $today)->count(),
+                'pendingOrders' => Order::paid()->where('status', 'New')->withItems()->whereDate('created_at', $today)->count(),
+                'overallCustomers' => Customer::active()->count(),
+                'todayCustomers' => Customer::active()->whereDate('created_at', $today)->count(),
+                'overallRestaurants' => Restaurant::active()->count(),
+                'todayRestaurants' => Restaurant::active()->whereDate('created_at', $today)->count(),
+                'pendingRestaurants' => Restaurant::where('status', 'Pending')->whereDate('created_at', $today)->count(),
+            ]);
+        }
 
-        $todaySales = Order::where('payment_status', 'Paid')
-            ->where('status', 'Completed')
-            ->whereHas('orderItems')
-            ->whereDate('created_at', $today)
-            ->sum('total_price');
+        if ($user->hasRole('Restaurant Manager')) {
+            $restaurantIds = $user->restaurants->pluck('id');
 
-        $overallOrders = Order::where('status', 'Completed')
-            ->where('payment_status', 'Paid')
-            ->whereHas('orderItems')
-            ->count();
+            return view('dashboard.index', [
+                'role' => 'Restaurant Manager',
+                'overallSales' => Order::whereIn('restaurant_id', $restaurantIds)->paid()->completed()->withItems()->sum('total_price'),
+                'todaySales' => Order::whereIn('restaurant_id', $restaurantIds)->paid()->completed()->withItems()->whereDate('created_at', $today)->sum('total_price'),
+                'overallOrders' => Order::whereIn('restaurant_id', $restaurantIds)->paid()->completed()->withItems()->count(),
+                'todayOrders' => Order::whereIn('restaurant_id', $restaurantIds)->paid()->completed()->withItems()->whereDate('created_at', $today)->count(),
+                'pendingOrders' => Order::whereIn('restaurant_id', $restaurantIds)->paid()->where('status', 'New')->withItems()->whereDate('created_at', $today)->count(),
+                // 'overallCustomers' => Customer::whereIn('restaurant_id', $restaurantIds)->active()->count(),
+                'overallCustomers' => Customer::whereIn('user_id', Order::whereIn('restaurant_id', Auth::user()->restaurants->pluck('id'))->pluck('user_id'))->with('user')->active()->count(),
+                'todayCustomers' => Customer::whereIn('user_id', Order::whereIn('restaurant_id', Auth::user()->restaurants->pluck('id'))->pluck('user_id'))->with('user')->active()->whereDate('created_at', $today)->count(),
+                'overallRestaurants' => Restaurant::where('user_id', auth()->user()->id)->active()->count(),
+                'todayRestaurants' => Restaurant::where('user_id', auth()->user()->id)->active()->whereDate('created_at', $today)->count(),
+                'pendingRestaurants' => Restaurant::where('user_id', auth()->user()->id)->where('status', 'Pending')->whereDate('created_at', $today)->count(),
+            ]);
+        }
 
-        $todayOrders = Order::where('status', 'Completed')
-            ->where('payment_status', 'Paid')
-            ->whereDate('created_at', $today)
-            ->whereHas('orderItems')
-            ->count();
+        if ($user->hasRole('Customer')) {
+            return view('dashboard.index', [
+                'role' => 'Customer',
+                'totalSpending' => Order::paid()->completed()->where('user_id', $user->id)->sum('total_price'),
+                'totalPoints' => Order::where('points', '>=', 0)->where('user_id', $user->id)->withItems()->sum('points'), 
+                'totalOrders' => Order::where('user_id', $user->id)->withItems()->count(),
+            ]);
+        }
 
-        $pendingOrders = Order::where('status', 'New')
-            ->where('payment_status', 'Paid')
-            ->whereDate('created_at', $today)
-            ->whereHas('orderItems')
-            ->count();
-
-        $overallCustomers = Customer::where('status', 'Active')->count();
-
-        $todayCustomers = Customer::where('status', 'Active')
-            ->whereDate('created_at', $today)
-            ->count();
-
-        $overallRestaurants = Restaurant::where('status', 'Active')->count();
-
-        $todayRestaurants = Restaurant::where('status', 'Active')
-            ->whereDate('created_at', $today)
-            ->count();
-
-        $pendingRestaurants = Restaurant::where('status', 'Pending')
-            ->whereDate('created_at', $today)
-            ->count();
-
-        return view('dashboard.index', [
-            'overallSales' => $overallSales,
-            'todaySales' => $todaySales,
-            'overallOrders' => $overallOrders,
-            'todayOrders' => $todayOrders,
-            'pendingOrders' => $pendingOrders,
-            'overallCustomers' => $overallCustomers,
-            'todayCustomers' => $todayCustomers,
-            'overallRestaurants' => $overallRestaurants,
-            'todayRestaurants' => $todayRestaurants,
-            'pendingRestaurants' => $pendingRestaurants,
-        ]);
+        abort(403, 'Unauthorized action.');
     }
 }

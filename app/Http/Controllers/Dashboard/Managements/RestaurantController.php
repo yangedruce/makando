@@ -13,7 +13,12 @@ class RestaurantController extends Controller
      */
     public function index()
     {
-        $restaurants = Restaurant::paginate(10);
+        $restaurants = Restaurant::where('user_id', auth()->user()->id)->paginate(10);
+
+        if(auth()->user()->isAdmin()) {
+            $restaurants = Restaurant::paginate(10);
+        }
+        
         return view('dashboard.management.restaurant.index', compact('restaurants'));
     }
 
@@ -44,6 +49,11 @@ class RestaurantController extends Controller
             'is_opened' => false,
             'user_id' => auth()->id(), 
         ]);
+
+        $categories = $request->input('categories');
+        foreach ($categories as $category) {
+            $restaurant->categories()->attach($category);
+        }
 
         return redirect()->route('dashboard.management.restaurant.index')->with('alert', 'Restaurant created successfully.');
     }
@@ -95,6 +105,11 @@ class RestaurantController extends Controller
             $updateData['inactive_at'] = now();
         } elseif ($validated['status'] === 'Active') {
             $updateData['inactive_at'] = null;
+        }
+
+        $categories = $request->input('categories');
+        foreach ($categories as $category) {
+            $restaurant->categories()->sync($category);
         }
     
         $restaurant->update($updateData);

@@ -70,8 +70,15 @@ class ConfigurationSeeder extends Seeder
                 'is_force_password_change' => false,
             ],
             [
-                'name' => 'Restaurant Manager',
-                'email' => 'manager@email.com',
+                'name' => 'Restaurant Manager 1',
+                'email' => 'manager1@email.com',
+                'email_verified_at' => '2024-05-12 16:45:04',
+                'password' => Hash::make('manager123'),
+                'is_force_password_change' => false,
+            ],
+            [
+                'name' => 'Restaurant Manager 2',
+                'email' => 'manager2@email.com',
                 'email_verified_at' => '2024-05-12 16:45:04',
                 'password' => Hash::make('manager123'),
                 'is_force_password_change' => false,
@@ -102,8 +109,22 @@ class ConfigurationSeeder extends Seeder
         $managerRole = Role::where('name', 'Restaurant Manager')->first();
         
         foreach(Permission::all() as $permission) {
-            if (in_array(explode(':', $permission->name)[0], ['restaurant-approval', 'activity-log', 'user', 'role'])) {
+            if (in_array(explode(':', $permission->name)[0], ['dashboard', 'shop', 'order', 'customer', 'restaurant', 'restaurant-approval', 'category', 'menu', 'type', 'activity-log', 'user', 'role'])) {
                 $adminRole->permissions()->attach($permission);
+            }
+        }
+
+        foreach(Permission::all() as $permission) {
+            if (in_array(explode(':', $permission->name)[0], ['dashboard', 'shop', 'order'])) {
+                if(!in_array($permission->name, ['order:create', 'order:update', 'order:delete'])) {
+                    $customerRole->permissions()->attach($permission);
+                }
+            }
+        }
+
+        foreach(Permission::all() as $permission) {
+            if (in_array(explode(':', $permission->name)[0], ['dashboard', 'shop', 'order', 'customer', 'restaurant','category', 'menu', 'type'])) {
+                $managerRole->permissions()->attach($permission);
             }
         }
 
@@ -123,7 +144,7 @@ class ConfigurationSeeder extends Seeder
             if ($currentUser->name == 'Customer1' || $currentUser->name == 'Customer2' || $currentUser->name == 'Customer3') {
                 $currentUser->roles()->attach($customerRole);
             }
-            if ($currentUser->name == 'Restaurant Manager') {
+            if ($currentUser->name == 'Restaurant Manager 1' || $currentUser->name == 'Restaurant Manager 2') {
                 $currentUser->roles()->attach($managerRole);
             }
         }

@@ -142,12 +142,13 @@ isScrolled = window.scrollY > 0;"
                             }
                         }">
                         <div class="flex items-center space-x-4">
-                            @isset($item->image->path)
+                            <template x-if="item.image">
                                 <img :src="window.location.protocol + '//' + window.location.host + '/' + item.image"
                                     alt="" class="w-12 h-12 object-cover rounded" />
-                            @else
-                                <x-text>{{ __('No Image') }}</x-text>
-                            @endisset
+                            </template>
+                            <template x-if="item.image == null">
+                                <x-text class="text-xs">{{ __('No Image') }}</x-text>
+                            </template>
                             <div class="flex flex-col">
                                 <p class="text-sm font-bold text-black dark:text-white" x-text="item.name"></p>
                                 <p class="text-sm text-neutral-600 dark:text-neutral-300" x-text="'$' + item.price"></p>
@@ -194,10 +195,14 @@ isScrolled = window.scrollY > 0;"
                     </div>
                 </div>
                 <div class="pt-4 border-t border-neutral-300 dark:border-neutral-700">
-                    <a href="{{ route('dashboard.shop.checkout') }}"
-                        class="w-full flex justify-center px-4 py-2 text-sm font-medium text-white bg-black border border-black rounded-md dark:text-black hover:bg-neutral-800 dark:bg-neutral-100 dark:hover:bg-white hover:border-neutral-800 dark:border-neutral-100 dark:hover:border-white disabled:pointer-events-none disabled:opacity-60">
-                        {{ __('Checkout') }}
-                    </a>
+                    <form action="{{ route('dashboard.shop.checkout') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="restaurant_id" :value="restaurant_id">
+                        <button type="submit"
+                            class="w-full flex justify-center px-4 py-2 text-sm font-medium text-white bg-black border border-black rounded-md dark:text-black hover:bg-neutral-800 dark:bg-neutral-100 dark:hover:bg-white hover:border-neutral-800 dark:border-neutral-100 dark:hover:border-white disabled:pointer-events-none disabled:opacity-60">
+                            {{ __('Checkout') }}
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>

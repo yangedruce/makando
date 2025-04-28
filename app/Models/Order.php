@@ -43,4 +43,18 @@ class Order extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function scopePaid($query)
+    {
+        return $query->where('payment_status', 'Paid');
+    }
+
+    public function scopeCompleted($query)
+    {
+        return $query->where('status', 'Completed');
+    }
+
+    public function scopeWithItems($query)
+    {
+        return $query->whereHas('orderItems');
+    }
 }

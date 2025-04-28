@@ -1,9 +1,30 @@
+@php
+    $total_points = auth()->user()->customer->total_points ?? 0;
+    if ($cart->total_price < number_format(auth()->user()->customer->total_points/100, 2)) {
+        $total_points = $cart->total_price*100;
+    }
+@endphp
+
 <x-layouts.web>
     <form method="POST" action="{{ route('dashboard.shop.checkout.payment') }}"
         class="w-full md:w-4/5 lg:w-1/2 mx-auto px-2 md:px-4" x-data="{
             isDelivery: false,
+            redeemPoints: false,
+            totalPoints: @js($total_points),
+            totalPrice: @js($cart->total_price),
+            checkRedeemPoints(input) {
+                this.redeemPoints = input.checked;
+                const pointsValue = this.totalPoints / 100;
+                if (this.redeemPoints) {
+                    this.totalPrice = parseFloat(this.totalPrice) - pointsValue;
+                } else {
+                    this.totalPrice = parseFloat(this.totalPrice) + pointsValue;
+                }
+                this.totalPrice = parseFloat(this.totalPrice).toFixed(2);
+            }
         }">
         @csrf
+        <input type="hidden" name="restaurant_id" value="{{ $cart->restaurant_id }}">
         <x-title>Order Information</x-title>
         <div class="flex flex-col mt-4">
             <h2 class="text-lg font-bold text-black dark:text-white">Order Type:</h2>
@@ -57,8 +78,18 @@
         @endforeach
 
         <div class="flex flex-col mt-4">
-            <x-text><span class="font-bold">Total Amount:</span> ${{ number_format($cart->total_price, 2) }}</x-text>
+            <x-text><span class="font-bold">Total Amount:</span> $<span x-text="totalPrice"></span></x-text>
             <x-text><span class="font-bold">Points Earned:</span> {{ round($cart->total_price) }}</x-text>
+        </div>
+
+        <div class="flex flex-col mt-4">
+            <div class="flex flex-wrap gap-4 md:gap-8">
+                <label class="flex items-center gap-2 text-sm capitalize text-neutral-800 dark:text-neutral-200">
+                    <span>{{ __('Redeem Points') }} <span x-text="totalPoints"></span> ($<span x-text="(totalPoints / 100).toFixed(2)"></span>)</span>
+                    <input type="checkbox" name="redeem_points" value="true" @click="checkRedeemPoints($el)"
+                        class="accent-neutral-800 dark:accent-neutral-200 disabled:pointer-events-none">
+                </label>
+            </div>
         </div>
 
         <div class="flex flex-wrap gap-4 items-center justify-center md:justify-between w-full mt-12">

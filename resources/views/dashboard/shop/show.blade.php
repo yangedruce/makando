@@ -67,8 +67,12 @@
                                         removeFromCart(this.id, this.image, this.name, this.price);
                                     }
                                 }" x-init="setTimeout(() => {
-                                    quantity = cart[id]?.quantity || 0;
-                                }, 100);">
+                                        quantity = cart[id]?.quantity || 0;
+                                    }, 100);
+                                    $watch('cart', cart => {
+                                        quantity = cart[id]?.quantity || 0;
+                                    })"
+                                >
                                 <div class="w-full h-32 overflow-hidden rounded-lg">
                                     @isset($menu->image->path)
                                         <img src="{{ asset($menu->image->path) }}" alt=""

@@ -13,7 +13,12 @@ class TypeController extends Controller
      */
     public function index()
     {
-        $types = Type::paginate(10); 
+        $types = Type::where('user_id', auth()->user()->id)->paginate(10); 
+
+        if(auth()->user()->isAdmin()) {
+            $types = Type::paginate(10);
+        }
+        
         return view('dashboard.management.type.index', compact('types'));
     }
 

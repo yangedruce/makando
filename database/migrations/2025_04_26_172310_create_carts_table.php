@@ -19,10 +19,10 @@ return new class extends Migration
             $table->foreignIdFor(User::class);
             $table->json('items')->nullable();
             $table->foreignIdFor(Restaurant::class)->nullable();
-            $table->foreignIdFor(Customer::class)->nullable();
             $table->decimal('total_price', 10, 2)->nullable();
             $table->integer('total_items')->default(0);
             $table->string('type')->default('Pickup');
+            $table->boolean('redeem_points')->default(false);
             $table->timestamps();
         });
     }

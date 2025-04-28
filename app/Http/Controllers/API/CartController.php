@@ -62,7 +62,11 @@ class CartController extends Controller
             $cart->total_price -= $items[$id]['price'];
             $cart->total_items -= 1;
             $items = json_decode($cart->items, true);
-            $items[$id]['quantity'] -= 1; 
+            if ($items[$id]['quantity'] <= 1) {
+                unset($items[$id]);
+            } else {
+                $items[$id]['quantity'] -= 1; 
+            }
             $cart->items = json_encode($items);
             $cart->save();
         }
@@ -78,7 +82,6 @@ class CartController extends Controller
         if (isset($items[$id])) {
             $cart->total_price -= $items[$id]['price'] * $items[$id]['quantity'];
             $cart->total_items -= $items[$id]['quantity'];
-            $cart->total_price -= round($items[$id]['price']) * $items[$id]['quantity'];
             unset($items[$id]);
             $cart->items = json_encode($items);
             $cart->save();
@@ -91,12 +94,11 @@ class CartController extends Controller
     {
         $restaurantId = $request->restaurant_id;
         $cart = [];
+        
         if ($restaurantId == null) {
             $cart = auth()->user()->cart;
         } else {
             $cart = Cart::where('user_id', auth()->user()->id)->where('restaurant_id', $restaurantId)->first();
-
-
         }
 
         if ($cart) {

@@ -15,7 +15,12 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $menus = Menu::with('type')->paginate(10);
+        $menus = Menu::where('user_id', auth()->user()->id)->with('type')->paginate(10);
+
+        if(auth()->user()->isAdmin()) {
+            $menus = Menu::paginate(10);
+        }
+        
         return view('dashboard.management.menu.index', compact('menus'));
     }
 
@@ -36,7 +41,7 @@ class MenuController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'price' => 'required|numeric|min:0',
+            'price' => 'required|numeric|min:0.5',
             'description' => 'required|string',
             'type_id' => 'required|exists:types,id',
             'restaurant_id' => 'required|exists:restaurants,id',
@@ -50,6 +55,7 @@ class MenuController extends Controller
             'description' => $validated['description'],
             'type_id' => $validated['type_id'],
             'restaurant_id' => $validated['restaurant_id'],
+            'user_id' => auth()->user()->id,
             'is_available' => $validated['is_available'],
         ]);
     

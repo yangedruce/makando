@@ -7,9 +7,10 @@
         {{ $title }}
     </x-slot>
 
-    <!-- Analytic -->
     <section class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3" x-data="{
-            analytics: [{
+            analytics: [
+            @if ($role === 'Admin' || $role === 'Restaurant Manager')
+            {
                 icon: `<svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 stroke-black dark:stroke-white' viewBox='0 0 24 24' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'><path stroke='none' d='M0 0h24v24H0z' fill='none'/><path d='M3 12m0 1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z' /><path d='M9 8m0 1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z' /><path d='M15 4m0 1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z' /><path d='M4 20l14 0' /></svg>`,
                 title: 'Overall Sales',
                 value: '${{ number_format($overallSales, 2) }}'
@@ -59,6 +60,23 @@
                 title: 'Pending Restaurants',
                 value: '{{ $pendingRestaurants }}'
             },
+            @elseif ($role === 'Customer')
+            {
+                icon: `<svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 stroke-black dark:stroke-white' viewBox='0 0 24 24' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'><path stroke='none' d='M0 0h24v24H0z' fill='none'/><path d='M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0' /><path d='M14.8 9a2 2 0 0 0-1.8-1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1-1.8-1' /><path d='M12 7v10' /></svg>`,
+                title: 'Total Spending',
+                value: '${{ number_format($totalSpending, 2) }}'
+            },
+            {
+                icon: `<svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 stroke-black dark:stroke-white' viewBox='0 0 24 24' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'><path stroke='none' d='M0 0h24v24H0z' fill='none'/><path d='M3 12m0 1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z' /><path d='M9 8m0 1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z' /><path d='M15 4m0 1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z' /><path d='M4 20l14 0' /></svg>`,
+                title: 'Total Points',
+                value: '{{ $totalPoints }}'
+            },
+            {
+                icon: `<svg xmlns='http://www.w3.org/2000/svg' class='w-6 h-6 stroke-black dark:stroke-white' viewBox='0 0 24 24' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'><path stroke='none' d='M0 0h24v24H0z' fill='none'/><path d='M3 12m0 1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z' /><path d='M9 8m0 1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z' /><path d='M15 4m0 1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z' /><path d='M4 20l14 0' /></svg>`,
+                title: 'Total Orders',
+                value: '{{ $totalOrders }}'
+            },
+            @endif
         ],
     }">
         <template x-for="analytic in analytics" hidden>

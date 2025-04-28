@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use App\Models\Menu;
 use App\Models\Type;
+use App\Models\User;
 use App\Models\Restaurant;
 
 class MenuSeeder extends Seeder
@@ -32,10 +33,14 @@ class MenuSeeder extends Seeder
         $burgerRestaurant->update(['is_opened' => true]);
         $pizzaRestaurant->update(['is_opened' => true]);
 
+        $manager1 = User::where('email', 'manager1@email.com')->first();
+        $manager2 = User::where('email', 'manager2@email.com')->first();
+
         $menus = [
             [
                 'id' => Str::uuid(),
                 'restaurant_id' => $burgerRestaurant->id,
+                'user_id' => $manager1->id,
                 'type_id' => $burgerTypeId,
                 'name' => 'Classic Cheeseburger',
                 'description' => 'Grilled beef patty with cheese, lettuce, tomato, and sauce.',
@@ -45,6 +50,7 @@ class MenuSeeder extends Seeder
             [
                 'id' => Str::uuid(),
                 'restaurant_id' => $burgerRestaurant->id,
+                'user_id' => $manager1->id,
                 'type_id' => $burgerTypeId,
                 'name' => 'Double Patty Burger',
                 'description' => 'Two juicy beef patties with melted cheddar.',
@@ -54,6 +60,7 @@ class MenuSeeder extends Seeder
             [
                 'id' => Str::uuid(),
                 'restaurant_id' => $pizzaRestaurant->id,
+                'user_id' => $manager2->id,
                 'type_id' => $pizzaTypeId,
                 'name' => 'Pepperoni Pizza',
                 'description' => 'Classic pepperoni with mozzarella and tomato sauce.',
@@ -63,6 +70,7 @@ class MenuSeeder extends Seeder
             [
                 'id' => Str::uuid(),
                 'restaurant_id' => $pizzaRestaurant->id,
+                'user_id' => $manager2->id,
                 'type_id' => $pizzaTypeId,
                 'name' => 'Margherita Pizza',
                 'description' => 'Fresh tomato, basil, and mozzarella.',
@@ -72,6 +80,7 @@ class MenuSeeder extends Seeder
             [
                 'id' => Str::uuid(),
                 'restaurant_id' => $burgerRestaurant->id,
+                'user_id' => $manager1->id,
                 'type_id' => $drinksTypeId,
                 'name' => 'Coca Cola',
                 'description' => 'Refreshing soda drink.',
@@ -81,6 +90,7 @@ class MenuSeeder extends Seeder
             [
                 'id' => Str::uuid(),
                 'restaurant_id' => $burgerRestaurant->id,
+                'user_id' => $manager1->id,
                 'type_id' => $drinksTypeId,
                 'name' => 'Orange Juice',
                 'description' => 'Freshly squeezed orange juice.',
@@ -90,6 +100,7 @@ class MenuSeeder extends Seeder
             [
                 'id' => Str::uuid(),
                 'restaurant_id' => $pizzaRestaurant->id,
+                'user_id' => $manager2->id,
                 'type_id' => $appetizersTypeId,
                 'name' => 'Garlic Bread',
                 'description' => 'Toasted bread with garlic and butter.',
@@ -99,12 +110,13 @@ class MenuSeeder extends Seeder
             [
                 'id' => Str::uuid(),
                 'restaurant_id' => $pizzaRestaurant->id,
+                'user_id' => $manager2->id,
                 'type_id' => $appetizersTypeId,
                 'name' => 'Mozzarella Sticks',
                 'description' => 'Crispy fried mozzarella cheese sticks.',
                 'price' => 8.00,
                 'is_available' => true,
-            ]
+            ],
         ];
 
         Menu::insert($menus);

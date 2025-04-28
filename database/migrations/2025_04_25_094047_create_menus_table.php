@@ -5,6 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Models\Restaurant;
 use App\Models\Type;
+use App\Models\User;
 
 return new class extends Migration
 {
@@ -17,6 +18,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignIdFor(Restaurant::class);
             $table->foreignIdFor(Type::class);
+            $table->foreignIdFor(User::class);
             $table->string('name');
             $table->text('description')->nullable();
             $table->decimal('price', 8, 2);

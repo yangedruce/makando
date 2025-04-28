@@ -26,6 +26,7 @@
 <body x-data="{
     cartOpen: false,
     cart: {},
+    restaurant_id: null,
     addToCart(id, image, name, price) {
         axios.post('/cart/add', {
                 id: id,
@@ -39,6 +40,8 @@
             })
             .then(response => {
                 this.cart = JSON.parse(response.data.cart.items)
+                this.restaurant_id = response.data.cart?.restaurant_id ?? null;
+                {{-- this.cartLength = Object.keys(this.cart).length; --}}
                 {{-- console.log(Object.keys(this.cart).length) --}}
             })
             .catch(error => {
@@ -59,6 +62,7 @@
             })
             .then(response => {
                 this.cart = JSON.parse(response.data.cart.items)
+                this.restaurant_id = response.data.cart?.restaurant_id ?? null;
             })
             .catch(error => {
                 {{-- if (error.response && error.response.data.errors) {
@@ -78,6 +82,7 @@
             })
             .then(response => {
                 this.cart = JSON.parse(response.data.cart.items)
+                this.restaurant_id = response.data.cart?.restaurant_id ?? null;
             })
             .catch(error => {
                 {{-- if (error.response && error.response.data.errors) {
@@ -94,6 +99,7 @@
                 null;
             const response = await axios.post('/cart/latest', { restaurant_id: id });
             this.cart = response.data.cart?.items ?? {};
+            this.restaurant_id = response.data.cart?.restaurant_id ?? null;
         } catch (error) {
             console.error(error);
         }

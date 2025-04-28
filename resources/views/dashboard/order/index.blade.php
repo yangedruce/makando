@@ -103,19 +103,22 @@
                                                     <x-link
                                                         href="{{ route('dashboard.order.edit', $order->id) }}">{{ __('Edit') }}</x-link>
                                                 @endif
-                                                <form id="delete-form-{{ $order->id }}" method="post"
-                                                    class="hidden"
-                                                    action="{{ route('dashboard.order.destroy', $order->id) }}">
-                                                    @csrf
-                                                    @method('delete')
-                                                </form>
+                                                @if (!auth()->user()->hasRole('Customer'))
+                                                    <form id="delete-form-{{ $order->id }}" method="post"
+                                                        class="hidden"
+                                                        action="{{ route('dashboard.order.destroy', $order->id) }}">
+                                                        @csrf
+                                                        @method('delete')
+                                                    </form>
 
-                                                <x-button style="link" x-data
-                                                    @click="
-                                                    $dispatch('open-modal', 'confirm-delete');
-                                                    id='{{ $order->id }}';
-                                                    name='{{ $order->customer->name }}';
-                                                ">{{ __('Delete') }}</x-button>
+                                                    <x-button style="link" x-data
+                                                        @click="
+                                                        $dispatch('open-modal', 'confirm-delete');
+                                                        id='{{ $order->id }}';
+                                                        name='{{ $order->customer->name }}';
+                                                    ">{{ __('Delete') }}</x-button>
+
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>
@@ -135,7 +138,8 @@
         </div>
 
         <x-paginator :data="$orders"></x-paginator>
-
-        @include('dashboard.order.partials.delete-form')
+        @if (!auth()->user()->hasRole('Customer'))
+            @include('dashboard.order.partials.delete-form')
+        @endif
     </div>
 </x-layouts.dashboard>

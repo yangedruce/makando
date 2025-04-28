@@ -89,6 +89,12 @@ class OrderController extends Controller
             'type' => $validated['type'],
         ]);
 
+        if ($order->status == 'Completed') {
+            $customer = $order->user->customer;
+            $customer->total_points += $order->points;
+            $customer->save();
+        }
+
         return redirect()->route('dashboard.order.index')->with('alert', 'Order updated successfully.');
     }
 

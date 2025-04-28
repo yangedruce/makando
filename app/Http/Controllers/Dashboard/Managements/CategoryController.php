@@ -14,7 +14,12 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::with('restaurants', 'manager')->paginate(10); 
+        $categories = Category::where('user_id', auth()->user()->id)->with('restaurants', 'manager')->paginate(10); 
+
+        if(auth()->user()->isAdmin()) {
+            $categories = Category::paginate(10);
+        }
+        
         return view('dashboard.management.category.index', compact('categories'));
     }
 
