@@ -18,14 +18,15 @@
                     {{ __('Menu Information') }}
                 </x-subtitle>
             </div>
-            <form method="post" action="{{ route('dashboard.management.menu.update', $menu->id) }}" enctype="multipart/form-data" x-data="{
-                validateForm() {
-                    $el.reportValidity();
-                    if ($el.checkValidity()) {
-                        $el.submit();
-                    }
-                },
-            }">
+            <form method="post" action="{{ route('dashboard.management.menu.update', $menu->id) }}"
+                enctype="multipart/form-data" x-data="{
+                    validateForm() {
+                        $el.reportValidity();
+                        if ($el.checkValidity()) {
+                            $el.submit();
+                        }
+                    },
+                }">
                 @csrf
                 @method('patch')
 
@@ -41,18 +42,17 @@
                         <x-input-select id="restaurant_id" name="restaurant_id">
                             <option value="">{{ __('Select a restaurant') }}</option>
                             @foreach ($restaurants as $restaurant)
-                                <option value="{{ $restaurant->id }}"
-                                    @selected($menu->restaurant_id === $restaurant->id)>
+                                <option value="{{ $restaurant->id }}" @selected($menu->restaurant_id === $restaurant->id)>
                                     {{ $restaurant->name }}
                                 </option>
                             @endforeach
                         </x-input-select>
                         <x-input-error :messages="$errors->get('restaurant_id')" />
-                    </div>   
+                    </div>
                     <div class="space-y-2">
                         <x-label for="price">{{ __('Price') }}</x-label>
-                        <x-input type="number" step="0.01" id="price" name="price" value="{{ $menu->price }}"
-                            placeholder="{{ __('Enter menu price') }}" />
+                        <x-input type="number" step="0.01" id="price" name="price"
+                            value="{{ $menu->price }}" placeholder="{{ __('Enter menu price') }}" />
                         <x-input-error :messages="$errors->get('price')" />
                     </div>
                     <div class="space-y-2">
@@ -72,7 +72,7 @@
                             @endforeach
                         </x-input-select>
                         <x-input-error :messages="$errors->get('type_id')" />
-                    </div>    
+                    </div>
                     <div class="space-y-2">
                         <x-label for="is_available">{{ __('Is Available') }}</x-label>
                         <div class="flex items-center gap-8">
@@ -97,16 +97,19 @@
                         <x-label for="image">{{ __('Image') }}</x-label>
                         <x-input type="file" id="image" name="image" accept="image/*" />
                         <x-input-error :messages="$errors->get('image')" />
-                        @isset($menu->image)
+                        @isset($menu->image->path)
                             <div class="mt-2">
-                                <img src="{{ asset($menu->image->path) }}" alt="Menu Image"
-                                    alt="Menu Image" class="w-32 h-32 object-cover rounded-lg">
+                                <img src="{{ asset($menu->image->path) }}" alt="Menu Image" alt="Menu Image"
+                                    class="w-32 h-32 object-cover rounded-lg">
                             </div>
+                        @else
+                            <x-text>{{ __('No Image') }}</x-text>
                         @endisset
                     </div>
                 </div>
                 <div class="flex items-center justify-between gap-2 mt-8">
-                    <x-link href="{{ route('dashboard.management.menu.index') }}" style="outline">{{ __('Back') }}</x-link>
+                    <x-link href="{{ route('dashboard.management.menu.index') }}"
+                        style="outline">{{ __('Back') }}</x-link>
                     <x-button @click="validateForm()">{{ __('Save') }}</x-button>
                 </div>
             </form>
