@@ -23,10 +23,11 @@
     </title>
 </head>
 
-<body class="relative min-h-screen antialiased bg-whiter dark:bg-neutral-950">
+<body class="relative min-h-screen antialiased bg-white dark:bg-neutral-950">
     <main>
         <div class="max-w-lg px-4 py-16 mx-auto sm:py-24 lg:py-32 sm:px-6 lg:px-8">
-            <div class="py-8 sm:py-12 lg:py-16">
+            <div class="flex flex-col">
+                <img src="{{ asset('img/makando-logo.png') }}" alt="Makando Logo" class="w-44 h-auto flex justify-center items-center mx-auto mb-8" />
                 <x-card>
                     {{ $slot }}
                 </x-card>

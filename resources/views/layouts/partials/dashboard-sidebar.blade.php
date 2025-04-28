@@ -26,7 +26,14 @@
         ],
         [
             'title' => __('Managements'),
-            'permissions' => ['customer:read', 'restaurant:read', 'restaurant-approval:read','category:read','menu:read','item:read'],
+            'permissions' => [
+                'customer:read',
+                'restaurant:read',
+                'restaurant-approval:read',
+                'category:read',
+                'menu:read',
+                'item:read',
+            ],
         ],
         [
             'title' => __('Customer'),
@@ -122,8 +129,9 @@
         class="fixed top-0 left-0 h-full px-4 overflow-y-auto bg-white border-r shadow sm:px-6 lg:px-8 lg:border-0 border-neutral-200 dark:border-neutral-800 lg:sticky w-72 lg:w-64 lg:bg-transparent lg:dark:bg-transparent lg:shadow-none dark:bg-neutral-800">
 
         <!-- Logo -->
-        <x-link href="{{ route('dashboard') }}" class="inline-block mt-4 sm:mt-6 lg:hidden">
-            <span class="text-lg font-bold text-black dark:text-white">{{ config('app.name', 'Makando') }}</span>
+        <x-link href="{{ route('dashboard') }}" class="inline-block mt-4 sm:mt-6 md:hidden">
+            <img src="{{ asset('img/makando-logo.png') }}" alt="Makando Logo" class="w-44 h-auto" />
+            {{-- <span class="text-lg font-bold text-black dark:text-white">{{ config('app.name', 'Makando') }}</span> --}}
         </x-link>
 
         <!-- Sidebar menu close button -->
