@@ -47,7 +47,7 @@
                                         </td>
                                         <td
                                             class="px-4 py-3 text-sm text-left capitalize text-neutral-800 dark:text-neutral-200">
-                                            {{ $order->restaurant->name ? $order->restaurant->name : '-' }}</x-td>
+                                            {{ $order->restaurant->name ? $order->restaurant->name : '-' }}
                                         </td>
                                         <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
                                             <div class="space-y-2">
