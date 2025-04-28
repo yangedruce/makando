@@ -44,19 +44,27 @@
                         <x-text>
                             @if ($restaurant->status === 'Inactive')
                                 @if ($restaurant->is_inactive)
-                                    <span class="bg-red-200 text-red-800 dark:text-red-800 rounded-full py-1 px-3 text-xs font-semibold">Inactive (7+ days)</span>
+                                    <span
+                                        class="bg-red-200 text-red-800 dark:text-red-800 rounded-full py-1 px-3 text-xs font-semibold">Inactive
+                                        (7+ days)</span>
                                 @else
-                                    <span class="bg-yellow-200 text-yellow-800 dark:text-yellow-800 rounded-full py-1 px-3 text-xs font-semibold">Inactive (Less than 7 days)</span>
+                                    <span
+                                        class="bg-yellow-200 text-yellow-800 dark:text-yellow-800 rounded-full py-1 px-3 text-xs font-semibold">Inactive
+                                        (Less than 7 days)</span>
                                 @endif
                             @elseif ($restaurant->status === 'Pending')
-                                <span class="bg-yellow-200 text-yellow-800 dark:text-yellow-800 rounded-full py-1 px-3 text-xs font-semibold">Pending Approval</span>
+                                <span
+                                    class="bg-yellow-200 text-yellow-800 dark:text-yellow-800 rounded-full py-1 px-3 text-xs font-semibold">Pending
+                                    Approval</span>
                             @elseif ($restaurant->status === 'Banned')
-                                <span class="bg-red-200 text-red-800 dark:text-red-800 rounded-full py-1 px-3 text-xs font-semibold">Banned</span>
+                                <span
+                                    class="bg-red-200 text-red-800 dark:text-red-800 rounded-full py-1 px-3 text-xs font-semibold">Banned</span>
                             @else
-                                <span class="bg-green-200 text-green-800 dark:text-green-800 rounded-full py-1 px-3 text-xs font-semibold">Active</span>
+                                <span
+                                    class="bg-green-200 text-green-800 dark:text-green-800 rounded-full py-1 px-3 text-xs font-semibold">Active</span>
                             @endif
                         </x-text>
-                    </div>                    
+                    </div>
                     <div>
                         <x-text><strong>Restaurant Availability:</strong></x-text>
                         <x-text>{{ $restaurant->is_opened ? __('Open') : __('Closed') }}</x-text>
@@ -68,8 +76,12 @@
                 <x-link href="{{ route('dashboard.management.restaurant.index') }}"
                     style="outline">{{ __('Back') }}</x-link>
                 <div class="flex items-center gap-2">
-                    <x-link href="{{ route('dashboard.management.restaurant.edit', $restaurant->id) }}"
-                        style="primary">{{ __('Edit') }}</x-link>
+                    @if (
+                        (auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Restaurant Manager')) &&
+                            $restaurant->status !== 'Pending')
+                        <x-link href="{{ route('dashboard.management.restaurant.edit', $restaurant->id) }}"
+                            style="primary">{{ __('Edit') }}</x-link>
+                    @endif
                     <x-button style="danger" x-data
                         @click="
                             $dispatch('open-modal', 'confirm-delete');
