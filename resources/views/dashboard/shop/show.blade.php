@@ -94,12 +94,14 @@
 
                                     <div class="flex justify-end items-end">
                                         @if ($menu->is_available)
-                                            <template x-if="quantity === 0">
-                                                <button @click="increment()"
-                                                    class="px-4 py-2 text-sm font-medium text-white bg-black border border-black rounded-md dark:text-black hover:bg-neutral-800 dark:bg-neutral-100 dark:hover:bg-white hover:border-neutral-800 dark:border-neutral-100 dark:hover:border-white disabled:pointer-events-none disabled:opacity-60 group">
-                                                    Add to Cart
-                                                </button>
-                                            </template>
+                                            @if (auth()->user()->hasRole('Customer'))
+                                                <template x-if="quantity === 0">
+                                                    <button @click="increment()"
+                                                        class="px-4 py-2 text-sm font-medium text-white bg-black border border-black rounded-md dark:text-black hover:bg-neutral-800 dark:bg-neutral-100 dark:hover:bg-white hover:border-neutral-800 dark:border-neutral-100 dark:hover:border-white disabled:pointer-events-none disabled:opacity-60 group">
+                                                        Add to Cart
+                                                    </button>
+                                                </template>
+                                            @endif
                                             <template x-if="quantity > 0">
                                                 <div class="flex items-center space-x-2">
                                                     <button @click="decrement()"
