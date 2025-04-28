@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\Managements;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Restaurant;
+use App\Models\Category;
 
 class RestaurantController extends Controller
 {
@@ -31,7 +32,8 @@ class RestaurantController extends Controller
      */
     public function create()
     {
-        return view('dashboard.management.restaurant.create');
+        $categories = Category::all();
+        return view('dashboard.management.restaurant.create', compact('categories'));
     }
 
     /**
@@ -77,8 +79,10 @@ class RestaurantController extends Controller
      */
     public function edit(string $id)
     {
+        $categories = Category::all();
         return view('dashboard.management.restaurant.edit', [
-            'restaurant' => Restaurant::findOrFail($id)
+            'restaurant' => Restaurant::findOrFail($id),
+            'categories' => $categories
         ]);
     }
 

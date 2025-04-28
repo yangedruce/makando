@@ -39,6 +39,9 @@
                                 <th class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
                                     {{ __('Restaurant Availability') }}
                                 </th>
+                                <th class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
+                                    {{ __('Restaurant Category') }}
+                                </th>
                                 <th class="px-4 pr-12 text-sm text-right text-neutral-800 dark:text-neutral-200">
                                     {{ __('Action') }}
                                 </th>
@@ -80,6 +83,17 @@
                                             @else
                                                 <span
                                                     class="bg-green-200 text-green-800 dark:text-green-800 rounded-full py-1 px-3 text-xs font-semibold">Active</span>
+                                            @endif
+                                        </td>
+                                        <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
+                                            @if($restaurant->categories->count() > 0)
+                                                @foreach ($restaurant->categories as $index => $category)
+                                                    {{ $category->name }}@if (!$loop->last)
+                                                        ,
+                                                    @endif
+                                                @endforeach
+                                            @else
+                                                <x-text>{{ __('-') }}</x-text>
                                             @endif
                                         </td>
                                         <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">

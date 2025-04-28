@@ -69,6 +69,20 @@
                         <x-text><strong>Restaurant Availability:</strong></x-text>
                         <x-text>{{ $restaurant->is_opened ? __('Open') : __('Closed') }}</x-text>
                     </div>
+                    <div>
+                        <x-text><strong>Categories:</strong></x-text>
+                        <x-text>
+                            @if($restaurant->categories->count() > 0)
+                                @foreach ($restaurant->categories as $index => $category)
+                                    {{ $category->name }}@if (!$loop->last)
+                                        ,
+                                    @endif
+                                @endforeach
+                            @else
+                                <x-text>{{ __('-') }}</x-text>
+                            @endif
+                        </x-text>
+                    </div>
                 </div>
             </div>
 

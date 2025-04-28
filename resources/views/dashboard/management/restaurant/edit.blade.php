@@ -87,6 +87,21 @@
                         </div>
                         <x-input-error :messages="$errors->get('is_opened')" />
                     </div>
+                    <div class="space-y-2">
+                        <x-label for="categories">{{ __('Categories') }}</x-label>
+                        <div class="flex flex-wrap gap-4">
+                            @foreach ($categories as $index => $category)
+                                <label for="category-id-{{ $index }}"
+                                    class="flex items-center gap-2 text-sm capitalize text-neutral-800 dark:text-neutral-200">
+                                    <input id="category-id-{{ $index }}" type="checkbox" name="category_id[]"
+                                        value="{{ $category->id }}" class="accent-neutral-800 dark:accent-neutral-200"
+                                        @if (in_array($category->id, $restaurant->categories->pluck('id')->toArray())) checked @endif>
+                                    <span>{{ $category->name }}</span>
+                                </label>
+                            @endforeach
+                        </div>
+                        <x-input-error :messages="$errors->get('category_id')" />
+                    </div>
                 </div>
                 <div class="flex items-center justify-between gap-2 mt-8">
                     <x-link href="{{ route('dashboard.management.restaurant.index') }}"
