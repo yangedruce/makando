@@ -50,11 +50,11 @@
                                         </td>
                                         <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
                                             <x-link style="no-hover"
-                                                href="{{ route('dashboard.management.category.show', $category->id) }}">{{ $category->name }}</x-link>
+                                                href="{{ route('dashboard.management.category.show', $category->id) }}">{{ $category->name ? $category->name : '-' }}</x-link>
                                         </td>
                                         @if(auth()->user()->hasRole('admin'))
                                             <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
-                                                {{ $category->manager->email ?? __('N/A') }}
+                                                {{ $category->manager->email ? $category->manager->email : '-' }}</x-td>
                                             </td>
                                         @endif
                                         <td class="px-4 py-3 text-sm capitalize text-neutral-800 dark:text-neutral-200">
