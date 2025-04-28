@@ -74,7 +74,7 @@
                                             {{ $menu->restaurant->name ? $menu->restaurant->name :'-' }}
                                         </td>
                                         <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
-                                            ${{ number_format($menu->price, 2) }}
+                                            ${{ number_format($menu->price ? $menu->price : '-', 2) }}
                                         </td>
                                         <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
                                             {{ $menu->type->name ? $menu->type->name :'-' }}

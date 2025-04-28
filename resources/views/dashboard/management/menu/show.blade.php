@@ -37,7 +37,7 @@
                     </div>
                     <div>
                         <x-text><strong>Price:</strong></x-text>
-                        <x-text>${{ number_format($menu->price, 2) }}</x-text>
+                        <x-text>${{ number_format($menu->price ? $menu->price : '-', 2) }}</x-text>
                     </div>
                     <div>
                         <x-text><strong>Description:</strong></x-text>
