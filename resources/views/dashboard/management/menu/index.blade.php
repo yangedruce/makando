@@ -63,7 +63,7 @@
                                                 <img src="{{ asset($menu->image->path) }}"
                                                     alt="Menu Image" class="w-16 h-16 object-cover rounded-lg">
                                             @else
-                                                {{ __('No Image') }}
+                                                <x-text>{{ __('No Image') }}</x-text>
                                             @endisset
                                         </td>
                                         <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">

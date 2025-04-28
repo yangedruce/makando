@@ -74,14 +74,16 @@
                                         <img src="{{ asset($menu->image->path) }}" alt=""
                                             class="w-full h-full object-cover" />
                                     @else
-                                        {{ __('No Image') }}
+                                        <x-text>{{ __('No Image') }}</x-text>
                                     @endisset
                                 </div>
 
                                 <div class="flex flex-col w-full gap-4">
                                     <div class="flex flex-col">
-                                        <h3 class="text-lg font-bold text-black dark:text-white">{{ $menu->name ? $menu->name : '-' }}</h3>
-                                        <p class="text-neutral-700 dark:text-neutral-300">{{ $menu->description ? $menu->description : '-' }}</p>
+                                        <h3 class="text-lg font-bold text-black dark:text-white">
+                                            {{ $menu->name ? $menu->name : '-' }}</h3>
+                                        <p class="text-neutral-700 dark:text-neutral-300">
+                                            {{ $menu->description ? $menu->description : '-' }}</p>
                                         <p class="text-neutral-700 dark:text-neutral-300">
                                             ${{ number_format($menu->price ? $menu->price : '-', 2) }}</p>
                                     </div>

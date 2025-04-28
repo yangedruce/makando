@@ -29,7 +29,7 @@
                 <div class="space-y-4">
                     <div>
                         <x-text><strong>Name:</strong></x-text>
-                        <x-text>{{ $menu->name ? $menu->name :'-' }}</x-text>
+                        <x-text>{{ $menu->name ? $menu->name : '-' }}</x-text>
                     </div>
                     <div>
                         <x-text><strong>Restaurant:</strong></x-text>
@@ -45,7 +45,7 @@
                     </div>
                     <div>
                         <x-text><strong>Type:</strong></x-text>
-                        <x-text>{{ $menu->type->name ? $menu->type->name : '-'  }}</x-text>
+                        <x-text>{{ $menu->type->name ? $menu->type->name : '-' }}</x-text>
                     </div>
                     <div>
                         <x-text><strong>Is Available:</strong></x-text>
@@ -64,7 +64,8 @@
             </div>
 
             <div class="flex items-center justify-between gap-2 mt-8">
-                <x-link href="{{ route('dashboard.management.menu.index') }}" style="outline">{{ __('Back') }}</x-link>
+                <x-link href="{{ route('dashboard.management.menu.index') }}"
+                    style="outline">{{ __('Back') }}</x-link>
                 <div class="flex items-center gap-2">
                     <x-link href="{{ route('dashboard.management.menu.edit', $menu->id) }}"
                         style="primary">{{ __('Edit') }}</x-link>
