@@ -20,7 +20,6 @@ class Order extends Model
         'type',
         'total_price',
         'payment_status',
-        'transaction_id',
         'points',
     ];
 
