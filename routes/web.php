@@ -78,10 +78,10 @@ Route::middleware(['auth', 'verified', 'password', 'validate'])->group(function 
                 Route::get('', [Order::class, 'index'])->name('index');
                 Route::get('/show/{id}', [Order::class, 'show'])->name('show');
             });
-            Route::middleware('permission:order:create')->group(function () {
-                Route::get('/create', [Order::class, 'create'])->name('create');
-                Route::post('/store', [Order::class, 'store'])->name('store');
-            });
+            // Route::middleware('permission:order:create')->group(function () {
+            //     Route::get('/create', [Order::class, 'create'])->name('create');
+            //     Route::post('/store', [Order::class, 'store'])->name('store');
+            // });
             Route::middleware('permission:order:update')->group(function () {
                 Route::get('/edit/{id}', [Order::class, 'edit'])->name('edit');
                 Route::patch('/update/{id}', [Order::class, 'update'])->name('update');

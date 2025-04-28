@@ -13,11 +13,11 @@
 
     <div x-data="{ id: null, name: null }">
         <div class="space-y-4">
-            <div class="flex flex-col items-end justify-end w-full gap-4 lg:items-center sm:flex-row sm:items-center">
+            {{-- <div class="flex flex-col items-end justify-end w-full gap-4 lg:items-center sm:flex-row sm:items-center">
                 <x-link href="{{ route('dashboard.order.create') }}" style="primary" class="sm:order-2">
                     {{ __('Add new order') }}
                 </x-link>
-            </div>
+            </div> --}}
             <div
                 class="overflow-hidden border divide-y rounded-md border-neutral-200 dark:border-neutral-800 divide-neutral-200 dark:divide-neutral-800">
                 <div class="overflow-x-auto">

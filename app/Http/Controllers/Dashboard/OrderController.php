@@ -23,34 +23,34 @@ class OrderController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        $users = User::all();
-        $restaurants = Restaurant::all();
+    // public function create()
+    // {
+    //     $users = User::all();
+    //     $restaurants = Restaurant::all();
 
-        return view('dashboard.order.create', compact('users', 'restaurants'));
-    }
+    //     return view('dashboard.order.create', compact('users', 'restaurants'));
+    // }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'restaurant_id' => 'required|exists:restaurants,id',
-            'status' => 'required|in:New,Pending,Proceeding,Completed,Cancelled',
-            'type' => 'required|in:Pickup,Delivery',
-            'total_price' => 'nullable|numeric|min:0',
-            'payment_status' => 'nullable|in:Paid,Unpaid',
-            'transaction_id' => 'nullable|string|max:255',
-            'points' => 'nullable|integer|min:0',
-        ]);
+    // public function store(Request $request)
+    // {
+    //     $validated = $request->validate([
+    //         'user_id' => 'required|exists:users,id',
+    //         'restaurant_id' => 'required|exists:restaurants,id',
+    //         'status' => 'required|in:New,Pending,Proceeding,Completed,Cancelled',
+    //         'type' => 'required|in:Pickup,Delivery',
+    //         'total_price' => 'nullable|numeric|min:0',
+    //         'payment_status' => 'nullable|in:Paid,Unpaid',
+    //         'transaction_id' => 'nullable|string|max:255',
+    //         'points' => 'nullable|integer|min:0',
+    //     ]);
 
-        Order::create($validated);
+    //     Order::create($validated);
 
-        return redirect()->route('dashboard.order.index')->with('alert', 'Order created successfully.');
-    }
+    //     return redirect()->route('dashboard.order.index')->with('alert', 'Order created successfully.');
+    // }
 
     /**
      * Display the specified resource.
