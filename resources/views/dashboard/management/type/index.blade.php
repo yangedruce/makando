@@ -48,10 +48,10 @@
                                         </td>
                                         <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
                                             <x-link style="no-hover"
-                                                href="{{ route('dashboard.management.type.show', $type->id) }}">{{ $type->name }}</x-link>
+                                                href="{{ route('dashboard.management.type.show', $type->id) }}">{{ $type->name ? $type->name : '-' }}</x-link>
                                         </td>
                                         <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
-                                            {{ $type->restaurant->name ?? __('N/A') }}
+                                            {{ $type->restaurant->name ? $type->restaurant->name : '-' }}</x-td>
                                         </td>
                                         <td class="px-4 py-3 text-sm capitalize text-neutral-800 dark:text-neutral-200">
                                             <div class="flex items-center justify-end gap-2">

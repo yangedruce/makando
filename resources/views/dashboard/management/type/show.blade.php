@@ -29,11 +29,11 @@
                 <div class="space-y-4">
                     <div>
                         <x-text><strong>Name:</strong></x-text>
-                        <x-text>{{ $type->name }}</x-text>
+                        <x-text>{{ $type->name ? $type->name : '-' }}</x-text>
                     </div>
                     <div>
                         <x-text><strong>Restaurant:</strong></x-text>
-                        <x-text>{{ $type->restaurant->name ?? 'N/A' }}</x-text>
+                        <x-text>{{ $type->restaurant->name ? $type->restaurant->name : '-' }}</x-text>
                     </div>
                 </div>
             </div>
