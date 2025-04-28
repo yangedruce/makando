@@ -142,23 +142,25 @@ isScrolled = window.scrollY > 0;"
                             }
                         }">
                         <div class="flex items-center space-x-4">
-                            <img :src="window.location.protocol + '//' + window.location.host + '/' + item.image"
-                                alt="" class="w-12 h-12 object-cover rounded" />
+                            @isset($item->image->path)
+                                <img :src="window.location.protocol + '//' + window.location.host + '/' + item.image"
+                                    alt="" class="w-12 h-12 object-cover rounded" />
+                            @else
+                                <x-text>{{ __('No Image') }}</x-text>
+                            @endisset
                             <div class="flex flex-col">
                                 <p class="text-sm font-bold text-black dark:text-white" x-text="item.name"></p>
                                 <p class="text-sm text-neutral-600 dark:text-neutral-300" x-text="'$' + item.price"></p>
 
                                 {{-- Increment / Decrement controls --}}
                                 <div class="flex items-center space-x-2 mt-2">
-                                    <button type="button" @click="decrement()" {{-- @click="item.quantity > 1 ? item.quantity-- : delete cart[idx]" --}}
+                                    <button type="button" @click="decrement()" 
                                         class="w-6 h-6 text-xs flex items-center justify-center bg-neutral-200 dark:bg-neutral-900 rounded hover:bg-neutral-300 dark:hover:bg-neutral-800 text-black dark:text-white">
                                         -
                                     </button>
-
                                     <span class="w-6 text-xs text-center text-black dark:text-white"
                                         x-text="item.quantity"></span>
-
-                                    <button type="button" @click="increment()" {{-- @click="item.quantity++" --}}
+                                    <button type="button" @click="increment()" 
                                         class="w-6 h-6 text-xs flex items-center justify-center bg-neutral-200 dark:bg-neutral-900 rounded hover:bg-neutral-300 dark:hover:bg-neutral-800 text-black dark:text-white">
                                         +
                                     </button>
@@ -191,18 +193,12 @@ isScrolled = window.scrollY > 0;"
                         </p>
                     </div>
                 </div>
-                {{-- <form method="POST" action="{{ route('dashboard.shop.checkout') }}">
-                    @csrf --}}
                 <div class="pt-4 border-t border-neutral-300 dark:border-neutral-700">
-                    {{-- <button type="submit" class="w-full flex justify-center px-4 py-2 text-sm font-medium text-white bg-black border border-black rounded-md dark:text-black hover:bg-neutral-800 dark:bg-neutral-100 dark:hover:bg-white hover:border-neutral-800 dark:border-neutral-100 dark:hover:border-white disabled:pointer-events-none disabled:opacity-60">
-                            {{ __('Checkout') }}
-                        </button> --}}
                     <a href="{{ route('dashboard.shop.checkout') }}"
                         class="w-full flex justify-center px-4 py-2 text-sm font-medium text-white bg-black border border-black rounded-md dark:text-black hover:bg-neutral-800 dark:bg-neutral-100 dark:hover:bg-white hover:border-neutral-800 dark:border-neutral-100 dark:hover:border-white disabled:pointer-events-none disabled:opacity-60">
                         {{ __('Checkout') }}
                     </a>
                 </div>
-                {{-- </form> --}}
             </div>
         </div>
     </div>
