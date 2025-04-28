@@ -22,7 +22,18 @@ class ShopController extends Controller
      */
     public function index(Request $request)
     {
+        $user = auth()->user();
         $query = Restaurant::with(['user', 'categories'])->where('status', config('constant.status.restaurant.active'));
+
+        if ($user->hasRole('Admin')) {
+            $query;
+        } elseif ($user->hasRole('Restaurant Manager')) {
+            $query->where('user_id', $user->id);
+        } elseif ($user->hasRole('Customer')) {
+            $query;
+        } else {
+            return redirect()->route('dashboard')->with('alert', 'Unauthorized access.');
+        }
 
         if ($keyword = $request->keyword) {
             $query->where('name', 'like', '%' . $keyword . '%');
@@ -37,6 +48,9 @@ class ShopController extends Controller
         $restaurants = $query->paginate(10);
 
         $categories = Category::all();
+        $categories = Category::whereHas('restaurants', function ($q) {
+            $q->where('status', config('constant.status.restaurant.active'));
+        })->distinct()->get();
 
         return view('dashboard.shop.index', [
             'restaurants' => $restaurants,
