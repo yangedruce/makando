@@ -16,6 +16,7 @@ class RestaurantSeeder extends Seeder
      */
     public function run(): void
     {
+        $manager = User::where('name', 'Restaurant Manager')->first();
         Restaurant::insert([
             [
                 'id' => Str::uuid(),
@@ -25,7 +26,7 @@ class RestaurantSeeder extends Seeder
                 'status' => 'Active',
                 'is_opened' => 1,
                 'inactive_at' => null,
-                'user_id' => User::first()->id,
+                'user_id' => $manager->id,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -37,7 +38,7 @@ class RestaurantSeeder extends Seeder
                 'status' => 'Active',
                 'is_opened' => 1,
                 'inactive_at' => null,
-                'user_id' => User::first()->id,
+                'user_id' => $manager->id,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -49,7 +50,7 @@ class RestaurantSeeder extends Seeder
                 'status' => 'Inactive', 
                 'is_opened' => 0,
                 'inactive_at' => Carbon::now()->subDays(10), 
-                'user_id' => User::first()->id,
+                'user_id' => $manager->id,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -61,7 +62,7 @@ class RestaurantSeeder extends Seeder
                 'status' => 'Pending', 
                 'is_opened' => 0,
                 'inactive_at' => null,
-                'user_id' => User::first()->id,
+                'user_id' => $manager->id,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
