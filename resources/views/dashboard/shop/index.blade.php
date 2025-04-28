@@ -85,14 +85,20 @@
                         class="bg-white border rounded-md border-neutral-200 hover:border-neutral-500 dark:hover:border-neutral-500 dark:border-neutral-800 dark:bg-neutral-800 p-4 flex flex-col items-center space-y-4">
                         <div class="flex flex-col w-full gap-y-4">
                             <div class="flex flex-col">
-                                <h3 class="text-lg font-bold text-black dark:text-white">{{ $restaurant->name }}</h3>
-                                <p class="text-neutral-700 dark:text-neutral-300">{{ $restaurant->address }}</p>
+                                <h3 class="text-lg font-bold text-black dark:text-white">
+                                    {{ $restaurant->name ? $restaurant->name : '-' }}</h3>
+                                <p class="text-neutral-700 dark:text-neutral-300">
+                                    {{ $restaurant->address ? $restaurant->address : '-' }}</p>
                             </div>
                             <p class="text-xs text-neutral-700 dark:text-neutral-300">
                                 <span class="font-bold">Categories:</span>
-                                @foreach ($restaurant->categories as $index => $category)
-                                    {{ $category->name }}@if ($index < count($restaurant->categories) - 1),@endif
-                                @endforeach
+                                @if ($restaurant->categories->count() > 0)
+                                    @foreach ($restaurant->categories as $index => $category)
+                                        {{ $category->name }}@if ($index < count($restaurant->categories) - 1),@endif
+                                    @endforeach
+                                @else
+                                    <x-text>{{ __('-') }}</x-text>
+                                @endif
                             </p>
                         </div>
                     </a>

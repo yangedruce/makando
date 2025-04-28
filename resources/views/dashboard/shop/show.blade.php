@@ -12,7 +12,7 @@
     </x-slot>
     <div class="flex flex-col gap-y-1 mb-10">
         <p class="text-sm text-left text-neutral-800 dark:text-neutral-200"><span class="font-bold">Address:</span>
-            {{ $restaurant->address }}</p>
+            {{ $restaurant->address ? $restaurant->address : '-' }}</p>
         <p class="text-sm text-left text-neutral-800 dark:text-neutral-200">
             <span class="font-bold">Availability:</span>
             <span
@@ -22,11 +22,15 @@
         </p>
         <p class="text-sm text-left text-neutral-800 dark:text-neutral-200">
             <span class="font-bold">Categories:</span>
-            @foreach ($restaurant->categories as $index => $category)
-                {{ $category->name }}@if (!$loop->last)
-                    ,
-                @endif
-            @endforeach
+            @if ($restaurant->categories->count() > 0)
+                @foreach ($restaurant->categories as $index => $category)
+                    {{ $category->name }}@if (!$loop->last)
+                        ,
+                    @endif
+                @endforeach
+            @else
+                <x-text>{{ __('-') }}</x-text>
+            @endif
         </p>
     </div>
     <div>
@@ -76,11 +80,10 @@
 
                                 <div class="flex flex-col w-full gap-4">
                                     <div class="flex flex-col">
-                                        <h3 class="text-lg font-bold text-black dark:text-white">{{ $menu->name }}
-                                        </h3>
-                                        <p class="text-neutral-700 dark:text-neutral-300">{{ $menu->description }}</p>
+                                        <h3 class="text-lg font-bold text-black dark:text-white">{{ $menu->name ? $menu->name : '-' }}</h3>
+                                        <p class="text-neutral-700 dark:text-neutral-300">{{ $menu->description ? $menu->description : '-' }}</p>
                                         <p class="text-neutral-700 dark:text-neutral-300">
-                                            ${{ number_format($menu->price, 2) }}</p>
+                                            ${{ number_format($menu->price ? $menu->price : '-', 2) }}</p>
                                     </div>
 
                                     <div class="flex justify-end items-end">
