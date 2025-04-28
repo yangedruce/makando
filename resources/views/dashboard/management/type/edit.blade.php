@@ -42,7 +42,7 @@
                             <option value="">{{ __('Select a restaurant') }}</option>
                             @foreach ($restaurants as $restaurant)
                                 <option value="{{ $restaurant->id }}"
-                                    @selected(old('restaurant_id', $type->restaurant_id) == $restaurant->id)>
+                                    {{ $type->restaurant_id == $restaurant->id ? 'selected' : '' }}>
                                     {{ $restaurant->name }}
                                 </option>
                             @endforeach

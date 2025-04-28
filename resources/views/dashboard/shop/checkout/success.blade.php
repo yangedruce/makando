@@ -1,7 +1,7 @@
 <x-layouts.web>
     <div class="flex flex-col items-center justify-center">
-        <h1 class="text-2xl font-bold text-green-600">Payment Successful! 🎉</h1>
-        <p class="text-gray-600 mt-4">Thank you for your purchase.</p>
-        <a href="{{ route('dashboard.shop.index') }}" class="mt-6 text-blue-500 underline">Back to Shop</a>
+        <h2 class="text-lg font-bold text-black dark:text-white">Payment Successful! 🎉</h2>
+        <x-text class="mt-4">Thank you for your purchase. Your order has been successfully placed.</x-text>
+        <x-link href="{{ route('dashboard.shop.index') }}" class="mt-6" style="primary">Back to Shop</x-link>
     </div>
 </x-layouts.web>

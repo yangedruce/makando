@@ -41,7 +41,7 @@
                         <x-input-select id="user_id" name="user_id">
                             <option value="">Select Manager</option>
                             @foreach ($users as $user)
-                                <option value="{{ $user->id }}" {{ old('user_id', $category->user_id) == $user->id ? 'selected' : '' }}>
+                                <option value="{{ $user->id }}" {{ $category->user_id === $user->id ? 'selected' : '' }}>
                                     {{ $user->name }} ({{ $user->email }})
                                 </option>
                             @endforeach

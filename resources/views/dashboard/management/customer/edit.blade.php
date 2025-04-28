@@ -33,25 +33,25 @@
                 <div class="max-w-xl space-y-4">
                     <div class="space-y-2">
                         <x-label for="name">{{ __('Name') }}</x-label>
-                        <x-input id="name" name="name" value="{{ old('name', $customer->user->name) }}"
+                        <x-input id="name" name="name" value="{{ $customer->user->name }}"
                             placeholder="{{ __('Enter customer name') }}" />
                         <x-input-error :messages="$errors->get('name')" />
                     </div>
                     <div class="space-y-2">
                         <x-label for="email">{{ __('Email') }}</x-label>
-                        <x-input id="email" name="email" value="{{ old('email', $customer->user->email) }}"
+                        <x-input id="email" name="email" value="{{ $customer->user->email }}"
                             placeholder="{{ __('Enter customer email') }}" />
                         <x-input-error :messages="$errors->get('email')" />
                     </div>
                     <div class="space-y-2">
                         <x-label for="phone_no">{{ __('Phone Number') }}</x-label>
-                        <x-input id="phone_no" name="phone_no" value="{{ old('phone_no', $customer->phone_no) }}"
+                        <x-input id="phone_no" name="phone_no" value="{{ $customer->phone_no }}"
                             placeholder="{{ __('Enter phone number') }}" />
                         <x-input-error :messages="$errors->get('phone_no')" />
                     </div>
                     <div class="space-y-2">
                         <x-label for="address">{{ __('Address') }}</x-label>
-                        <x-input id="address" name="address" value="{{ old('address', $customer->address) }}"
+                        <x-input id="address" name="address" value="{{ $customer->address }}"
                             placeholder="{{ __('Enter address') }}" />
                         <x-input-error :messages="$errors->get('address')" />
                     </div>
@@ -61,13 +61,13 @@
                             <label
                                 class="flex items-center gap-2 text-sm capitalize text-neutral-800 dark:text-neutral-200">
                                 <input type="radio" name="status" value="Active"
-                                    class="accent-neutral-800 dark:accent-neutral-200" @checked(old('status', $customer->status) === 'Active')>
+                                    class="accent-neutral-800 dark:accent-neutral-200" @checked($customer->status === 'Active')>
                                 <span>{{ __('Active') }}</span>
                             </label>
                             <label
                                 class="flex items-center gap-2 text-sm capitalize text-neutral-800 dark:text-neutral-200">
                                 <input type="radio" name="status" value="Inactive"
-                                    class="accent-neutral-800 dark:accent-neutral-200" @checked(old('status', $customer->status) === 'Inactive')>
+                                    class="accent-neutral-800 dark:accent-neutral-200" @checked($customer->status === 'Inactive')>
                                 <span>{{ __('Inactive') }}</span>
                             </label>
                         </div>
@@ -76,7 +76,7 @@
                     <div class="space-y-2">
                         <x-label for="total_points">{{ __('Total Points') }}</x-label>
                         <x-input id="total_points" name="total_points" type="number" min="0"
-                            value="{{ old('total_points', $customer->total_points) }}"
+                            value="{{ $customer->total_points }}"
                             placeholder="{{ __('Enter total points') }}" />
                         <x-input-error :messages="$errors->get('total_points')" />
                     </div>
