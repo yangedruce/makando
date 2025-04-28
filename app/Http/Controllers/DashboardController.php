@@ -23,25 +23,13 @@ class DashboardController extends Controller
         $overallSales = Order::where('payment_status', 'Paid')
             ->where('status', 'Completed')
             ->whereHas('orderItems')
-            ->with('orderItems')
-            ->get()
-            ->sum(function ($order) {
-                return $order->orderItems->sum(function ($item) {
-                    return $item->price * $item->quantity;
-                });
-            });
+            ->sum('total_price');
 
         $todaySales = Order::where('payment_status', 'Paid')
             ->where('status', 'Completed')
-            ->whereDate('created_at', $today)
             ->whereHas('orderItems')
-            ->with('orderItems')
-            ->get()
-            ->sum(function ($order) {
-                return $order->orderItems->sum(function ($item) {
-                    return $item->price * $item->quantity;
-                });
-            });
+            ->whereDate('created_at', $today)
+            ->sum('total_price');
 
         $overallOrders = Order::where('status', 'Completed')
             ->where('payment_status', 'Paid')
