@@ -57,7 +57,7 @@
                                                 href="{{ route('dashboard.management.restaurant.show', $restaurant->id) }}">{{ $restaurant->name ? $restaurant->name : '-' }}</x-link>
                                         </td>
                                         <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
-                                            {{ $restaurant->address ? $restaurant->address : '-' }}</x-td>
+                                            {{ $restaurant->address ? $restaurant->address : '-' }}
                                         </td>
                                         <td class="px-4 py-3 text-sm">
                                             @if ($restaurant->status === 'Inactive')
