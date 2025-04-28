@@ -54,7 +54,7 @@
                                         </td>
                                         @if(auth()->user()->hasRole('admin'))
                                             <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
-                                                {{ $category->manager->email ? $category->manager->email : '-' }}</x-td>
+                                                {{ $category->manager->email ? $category->manager->email : '-' }}
                                             </td>
                                         @endif
                                         <td class="px-4 py-3 text-sm capitalize text-neutral-800 dark:text-neutral-200">
