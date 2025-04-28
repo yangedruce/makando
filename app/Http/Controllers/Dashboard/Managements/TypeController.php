@@ -13,12 +13,18 @@ class TypeController extends Controller
      */
     public function index()
     {
-        $types = Type::where('user_id', auth()->user()->id)->paginate(10); 
+        $user = auth()->user();
 
-        if(auth()->user()->isAdmin()) {
+        if ($user->hasRole('Admin')) {
             $types = Type::paginate(10);
+        } elseif ($user->hasRole('Restaurant Manager')) {
+            $types = Type::whereHas('restaurant', function ($query) use ($user) {
+                $query->whereIn('id', $user->restaurants->pluck('id'));
+            })->paginate(10);
+        } else {
+            abort(403, 'Unauthorized action.');
         }
-        
+
         return view('dashboard.management.type.index', compact('types'));
     }
 

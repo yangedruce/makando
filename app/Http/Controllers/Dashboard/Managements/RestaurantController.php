@@ -13,12 +13,16 @@ class RestaurantController extends Controller
      */
     public function index()
     {
-        $restaurants = Restaurant::where('user_id', auth()->user()->id)->paginate(10);
+        $user = auth()->user();
 
-        if(auth()->user()->isAdmin()) {
+        if ($user->hasRole('Admin')) {
             $restaurants = Restaurant::paginate(10);
+        } elseif ($user->hasRole('Restaurant Manager')) {
+            $restaurants = Restaurant::where('user_id', $user->id)->paginate(10);
+        } else {
+            abort(403, 'Unauthorized action.');
         }
-        
+
         return view('dashboard.management.restaurant.index', compact('restaurants'));
     }
 
@@ -138,8 +142,14 @@ class RestaurantController extends Controller
      */
     public function getApproval()
     {
+        $user = auth()->user();
+
+        if (!$user->hasRole('Admin')) {
+            abort(403, 'Unauthorized action.');
+        }
+
         $restaurants = Restaurant::where('status', config('constant.status.restaurant.pending'))->paginate(10);
-        
+
         return view('dashboard.management.approval.index', compact('restaurants'));
     }
 

@@ -15,12 +15,16 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $menus = Menu::where('user_id', auth()->user()->id)->with('type')->paginate(10);
+        $user = auth()->user();
 
-        if(auth()->user()->isAdmin()) {
-            $menus = Menu::paginate(10);
+        if ($user->hasRole('Admin')) {
+            $menus = Menu::with('type')->paginate(10);
+        } elseif ($user->hasRole('Restaurant Manager')) {
+            $menus = Menu::whereIn('restaurant_id', $user->restaurants->pluck('id'))->with('type')->paginate(10);
+        } else {
+            abort(403, 'Unauthorized action.');
         }
-        
+
         return view('dashboard.management.menu.index', compact('menus'));
     }
 

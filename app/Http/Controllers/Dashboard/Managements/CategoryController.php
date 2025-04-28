@@ -14,12 +14,18 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::where('user_id', auth()->user()->id)->with('restaurants', 'manager')->paginate(10); 
+        $user = auth()->user();
 
-        if(auth()->user()->isAdmin()) {
-            $categories = Category::paginate(10);
+        if ($user->hasRole('Admin')) {
+            $categories = Category::with('restaurants', 'manager')->paginate(10);
+        } elseif ($user->hasRole('Restaurant Manager')) {
+            $categories = Category::whereHas('restaurants', function ($query) use ($user) {
+                $query->whereIn('id', $user->restaurants->pluck('id'));
+            })->with('restaurants', 'manager')->paginate(10);
+        } else {
+            abort(403, 'Unauthorized action.');
         }
-        
+
         return view('dashboard.management.category.index', compact('categories'));
     }
 
