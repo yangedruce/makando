@@ -29,15 +29,15 @@
                 <div class="space-y-4">
                     <div>
                         <x-text><strong>Name:</strong></x-text>
-                        <x-text>{{ $restaurant->name }}</x-text>
+                        <x-text>{{ $restaurant->name ? $restaurant->name : '-' }}</x-text>
                     </div>
                     <div>
                         <x-text><strong>Description:</strong></x-text>
-                        <x-text>{{ $restaurant->description }}</x-text>
+                        <x-text>{{ $restaurant->description ? $restaurant->description : '-' }}</x-text>
                     </div>
                     <div>
                         <x-text><strong>Address:</strong></x-text>
-                        <x-text>{{ $restaurant->address }}</x-text>
+                        <x-text>{{ $restaurant->address ? $restaurant->address : '-' }}</x-text>
                     </div>
                     <div>
                         <x-text class="mb-1"><strong>Status:</strong></x-text>
