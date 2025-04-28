@@ -43,11 +43,11 @@
                                         </td>
                                         <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
                                             <x-link style="no-hover"
-                                                href="{{ route('dashboard.order.show', $order->id) }}">{{ $order->customer->name ?? __('N/A') }}</x-link>
+                                                href="{{ route('dashboard.order.show', $order->id) }}">{{ $order->customer->name ? $order->customer->name : '-' }}</x-link>
                                         </td>
                                         <td
                                             class="px-4 py-3 text-sm text-left capitalize text-neutral-800 dark:text-neutral-200">
-                                            {{ $order->restaurant->name ?? __('N/A') }}
+                                            {{ $order->restaurant->name ? $order->restaurant->name : '-' }}</x-td>
                                         </td>
                                         <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
                                             <div class="space-y-2">
