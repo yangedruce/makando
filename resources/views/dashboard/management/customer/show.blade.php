@@ -29,27 +29,27 @@
                 <div class="space-y-4">
                     <div>
                         <x-text><strong>Name:</strong></x-text>
-                        <x-text>{{ $customer->user->name }}</x-text>
+                        <x-text>{{ $customer->user->name ? $customer->user->name : '-' }}</x-text>
                     </div>
                     <div>
                         <x-text><strong>Email:</strong></x-text>
-                        <x-text>{{ $customer->user->email }}</x-text>
+                        <x-text>{{ $customer->user->email ? $customer->user->email : '-' }}</x-text>
                     </div>
                     <div>
                         <x-text><strong>Phone No:</strong></x-text>
-                        <x-text>{{ $customer->phone_no }}</x-text>
+                        <x-text>{{ $customer->phone_no ? $customer->phone_no : '-' }}</x-text>
                     </div>
                     <div>
                         <x-text><strong>Address:</strong></x-text>
-                        <x-text>{{ $customer->address }}</x-text>
+                        <x-text>{{ $customer->address ? $customer->address : '-' }}</x-text>
                     </div>
                     <div>
                         <x-text><strong>Status:</strong></x-text>
-                        <x-text>{{ $customer->status }}</x-text>
+                        <x-text>{{ $customer->status ? $customer->status : '-' }}</x-text>
                     </div>
                     <div>
                         <x-text><strong>Total Points:</strong></x-text>
-                        <x-text>{{ $customer->total_points }}</x-text>
+                        <x-text>{{ $customer->total_points ? $customer->total_points : '-' }}</x-text>
                     </div>                    
                 </div>
             </div>

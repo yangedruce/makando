@@ -57,10 +57,10 @@
                                         </td>
                                         <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
                                             <x-link style="no-hover"
-                                                href="{{ route('dashboard.management.customer.show', $customer->id) }}">{{ $customer->user->name }}</x-link>
+                                                href="{{ route('dashboard.management.customer.show', $customer->id) }}">{{ $customer->user->name ? $customer->user->name : '-' }}</x-link>
                                         </td>
                                         <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
-                                            {{ $customer->user->email }}
+                                            {{ $customer->user->email ? $customer->user->email : '-' }}
                                         </td>
                                         <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
                                             {{ $customer->phone_no ? $customer->phone_no : '-' }}
@@ -69,7 +69,7 @@
                                             {{ $customer->address ? $customer->address : '-' }}
                                         </td>
                                         <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
-                                            {{ $customer->status }}
+                                            {{ $customer->status ? $customer->status : '-' }}
                                         </td>
                                         <td class="px-4 py-3 text-sm capitalize text-neutral-800 dark:text-neutral-200">
                                             <div class="flex items-center justify-end gap-2">
