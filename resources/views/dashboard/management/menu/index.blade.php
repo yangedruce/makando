@@ -71,13 +71,13 @@
                                                 href="{{ route('dashboard.management.menu.show', $menu->id) }}">{{ $menu->name ? $menu->name :'-' }}</x-link>
                                         </td>
                                         <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
-                                            {{ $menu->restaurant->name ? $menu->restaurant->name :'-' }}</x-td>
+                                            {{ $menu->restaurant->name ? $menu->restaurant->name :'-' }}
                                         </td>
                                         <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
                                             ${{ number_format($menu->price, 2) }}
                                         </td>
                                         <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
-                                            {{ $menu->type->name ? $menu->type->name :'-' }}</x-td>
+                                            {{ $menu->type->name ? $menu->type->name :'-' }}
                                         </td>
                                         <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
                                             {{ $menu->is_available ? __('Yes') : __('No') }}

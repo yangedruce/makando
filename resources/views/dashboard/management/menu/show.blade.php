@@ -53,7 +53,7 @@
                     </div>
                     <div>
                         <x-text><strong>Image:</strong></x-text>
-                        @isset($menu->image)
+                        @isset($menu->image->path)
                             <img src="{{ asset($menu->image->path) }}" alt="Menu Image"
                                 class="mt-1 w-32 h-32 object-cover rounded-lg">
                         @else
