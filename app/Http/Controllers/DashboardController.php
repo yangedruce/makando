@@ -48,7 +48,6 @@ class DashboardController extends Controller
                 'overallOrders' => Order::whereIn('restaurant_id', $restaurantIds)->paid()->completed()->withItems()->count(),
                 'todayOrders' => Order::whereIn('restaurant_id', $restaurantIds)->paid()->completed()->withItems()->whereDate('created_at', $today)->count(),
                 'pendingOrders' => Order::whereIn('restaurant_id', $restaurantIds)->paid()->where('status', 'New')->withItems()->whereDate('created_at', $today)->count(),
-                // 'overallCustomers' => Customer::whereIn('restaurant_id', $restaurantIds)->active()->count(),
                 'overallCustomers' => Customer::whereIn('user_id', Order::whereIn('restaurant_id', Auth::user()->restaurants->pluck('id'))->pluck('user_id'))->with('user')->active()->count(),
                 'todayCustomers' => Customer::whereIn('user_id', Order::whereIn('restaurant_id', Auth::user()->restaurants->pluck('id'))->pluck('user_id'))->with('user')->active()->whereDate('created_at', $today)->count(),
                 'overallRestaurants' => Restaurant::where('user_id', auth()->user()->id)->active()->count(),
