@@ -68,16 +68,16 @@
                                         </td>
                                         <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
                                             <x-link style="no-hover"
-                                                href="{{ route('dashboard.management.menu.show', $menu->id) }}">{{ $menu->name }}</x-link>
+                                                href="{{ route('dashboard.management.menu.show', $menu->id) }}">{{ $menu->name ? $menu->name :'-' }}</x-link>
                                         </td>
                                         <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
-                                            {{ $menu->restaurant->name ?? __('N/A') }}
+                                            {{ $menu->restaurant->name ? $menu->restaurant->name :'-' }}</x-td>
                                         </td>
                                         <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
                                             ${{ number_format($menu->price, 2) }}
                                         </td>
                                         <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
-                                            {{ $menu->type?->name ?? '-' }}
+                                            {{ $menu->type->name ? $menu->type->name :'-' }}</x-td>
                                         </td>
                                         <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
                                             {{ $menu->is_available ? __('Yes') : __('No') }}

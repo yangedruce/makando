@@ -29,11 +29,11 @@
                 <div class="space-y-4">
                     <div>
                         <x-text><strong>Name:</strong></x-text>
-                        <x-text>{{ $menu->name }}</x-text>
+                        <x-text>{{ $menu->name ? $menu->name :'-' }}</x-text>
                     </div>
                     <div>
                         <x-text><strong>Restaurant:</strong></x-text>
-                        <x-text>{{ $menu->restaurant->name ?? 'N/A' }}</x-text>
+                        <x-text>{{ $menu->restaurant->name ? $menu->restaurant->name : '-' }}</x-text>
                     </div>
                     <div>
                         <x-text><strong>Price:</strong></x-text>
@@ -41,11 +41,11 @@
                     </div>
                     <div>
                         <x-text><strong>Description:</strong></x-text>
-                        <x-text>{{ $menu->description }}</x-text>
+                        <x-text>{{ $menu->description ? $menu->description : '-' }}</x-text>
                     </div>
                     <div>
                         <x-text><strong>Type:</strong></x-text>
-                        <x-text>{{ $menu->type?->name ?? '-' }}</x-text>
+                        <x-text>{{ $menu->type->name ? $menu->type->name : '-'  }}</x-text>
                     </div>
                     <div>
                         <x-text><strong>Is Available:</strong></x-text>
