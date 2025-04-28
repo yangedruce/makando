@@ -39,7 +39,7 @@
                                             {{ ++$index }}
                                         </td>
                                         <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
-                                            {{ $restaurant->name }}
+                                            {{ $restaurant->name ? $restaurant->name : '-' }}</x-link>
                                         </td>
                                         <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
                                             <div class="space-y-2">
