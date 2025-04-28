@@ -1,6 +1,6 @@
-# Food Ordering System
+# Makando
 
-Source code for Food Ordering System.
+Source code for Makando.
 
 Tech stacks:
 

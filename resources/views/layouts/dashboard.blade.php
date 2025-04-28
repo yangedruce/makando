@@ -19,7 +19,7 @@
     <title>
         @isset($title)
             {!! "$title | " !!}
-        @endisset {{ config('app.name', 'Food Ordering System') }}
+        @endisset {{ config('app.name', 'Makando') }}
     </title>
 </head>
 
@@ -28,77 +28,78 @@
     cart: {},
     addToCart(id, image, name, price) {
         axios.post('/cart/add', {
-            id: id,
-            image: image,
-            name: name,
-            price: price
-        }, {
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector(`meta[name='csrf-token']`).getAttribute('content')
-            }
-        })
-        .then(response => {
-            this.cart = JSON.parse(response.data.cart.items)
-            {{-- console.log(Object.keys(this.cart).length) --}}
-        })
-        .catch(error => {
-            {{-- if (error.response && error.response.data.errors) {
+                id: id,
+                image: image,
+                name: name,
+                price: price
+            }, {
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector(`meta[name='csrf-token']`).getAttribute('content')
+                }
+            })
+            .then(response => {
+                this.cart = JSON.parse(response.data.cart.items)
+                {{-- console.log(Object.keys(this.cart).length) --}}
+            })
+            .catch(error => {
+                {{-- if (error.response && error.response.data.errors) {
                 this.message = Object.values(error.response.data.errors).join(', ');
             } else {
                 this.message = 'Something went wrong.';
             } --}}
-        });
+            });
     },
     removeFromCart(id) {
         axios.post('/cart/remove', {
-            id: id,
-        }, {
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector(`meta[name='csrf-token']`).getAttribute('content')
-            }
-        })
-        .then(response => {
-            this.cart = JSON.parse(response.data.cart.items)
-        })
-        .catch(error => {
-            {{-- if (error.response && error.response.data.errors) {
+                id: id,
+            }, {
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector(`meta[name='csrf-token']`).getAttribute('content')
+                }
+            })
+            .then(response => {
+                this.cart = JSON.parse(response.data.cart.items)
+            })
+            .catch(error => {
+                {{-- if (error.response && error.response.data.errors) {
                 this.message = Object.values(error.response.data.errors).join(', ');
             } else {
                 this.message = 'Something went wrong.';
             } --}}
-        });
+            });
     },
     clearFromCart(id) {
         axios.post('/cart/clear', {
-            id: id,
-        }, {
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector(`meta[name='csrf-token']`).getAttribute('content')
-            }
-        })
-        .then(response => {
-            this.cart = JSON.parse(response.data.cart.items)
-        })
-        .catch(error => {
-            {{-- if (error.response && error.response.data.errors) {
+                id: id,
+            }, {
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector(`meta[name='csrf-token']`).getAttribute('content')
+                }
+            })
+            .then(response => {
+                this.cart = JSON.parse(response.data.cart.items)
+            })
+            .catch(error => {
+                {{-- if (error.response && error.response.data.errors) {
                 this.message = Object.values(error.response.data.errors).join(', ');
             } else {
                 this.message = 'Something went wrong.';
             } --}}
-        });
+            });
     },
     async initCart() {
         try {
-            const id = window.location.pathname.includes('/shop/show/')
-                ? window.location.pathname.split('/shop/show/')[1]
-                : null;
+            const id = window.location.pathname.includes('/shop/show/') ?
+                window.location.pathname.split('/shop/show/')[1] :
+                null;
             const response = await axios.post('/cart/latest', { restaurant_id: id });
             this.cart = response.data.cart?.items ?? {};
         } catch (error) {
             console.error(error);
         }
     },
-}" x-init="initCart()"class="relative min-h-screen antialiased bg-white dark:bg-neutral-950">
+}"
+    x-init="initCart()"class="relative min-h-screen antialiased bg-white dark:bg-neutral-950">
 
     {{-- Navbar --}}
     @include('layouts.partials.dashboard-navbar')

@@ -114,8 +114,7 @@
 
         <!-- Logo -->
         <x-link href="{{ route('dashboard') }}" class="inline-block mt-4 sm:mt-6 lg:hidden">
-            <span
-                class="text-lg font-bold text-black dark:text-white">{{ config('app.name', 'Food Ordering System') }}</span>
+            <span class="text-lg font-bold text-black dark:text-white">{{ config('app.name', 'Makando') }}</span>
         </x-link>
 
         <!-- Sidebar menu close button -->

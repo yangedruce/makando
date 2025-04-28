@@ -13,8 +13,8 @@ return [
     |
     */
 
-    'name' => 'Food Ordering System',
-    'description' => 'Laravel 12 Food Ordering System.',
+    'name' => 'Makando',
+    'description' => 'Laravel 12 Makando.',
     'version' => '0.1.0',
 
     /*

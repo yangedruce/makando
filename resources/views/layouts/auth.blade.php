@@ -19,7 +19,7 @@
     <title>
         @isset($title)
             {!! "$title | " !!}
-        @endisset {{ config('app.name', 'Food Ordering System') }}
+        @endisset {{ config('app.name', 'Makando') }}
     </title>
 </head>
 

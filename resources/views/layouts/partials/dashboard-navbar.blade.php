@@ -30,14 +30,13 @@ isScrolled = window.scrollY > 0;"
             @endif
 
             <x-link href="{{ route('dashboard') }}" class="hidden md:inline-block ">
-                <span
-                    class="text-lg font-bold text-black dark:text-white">{{ config('app.name', 'Food Ordering System') }}</span>
+                <span class="text-lg font-bold text-black dark:text-white">{{ config('app.name', 'Makando') }}</span>
             </x-link>
         </div>
 
         <div class="flex items-center gap-3">
-            @if(auth()->user()->customer)
-                <x-text>Points: {{ auth()->user()->customer->total_points}}</x-text>
+            @if (auth()->user()->customer)
+                <x-text>Points: {{ auth()->user()->customer->total_points }}</x-text>
             @endif
             <div class="flex items-center gap-1">
                 <x-link href="#" class="block p-2 group relative" aria-label="Go to cart."
@@ -141,8 +140,7 @@ isScrolled = window.scrollY > 0;"
                                 this.quantity = 0;
                                 clearFromCart(this.id);
                             }
-                        }"
-                    >
+                        }">
                         <div class="flex items-center space-x-4">
                             <img :src="window.location.protocol + '//' + window.location.host + '/' + item.image"
                                 alt="" class="w-12 h-12 object-cover rounded" />
@@ -152,8 +150,7 @@ isScrolled = window.scrollY > 0;"
 
                                 {{-- Increment / Decrement controls --}}
                                 <div class="flex items-center space-x-2 mt-2">
-                                    <button type="button" @click="decrement()"
-                                        {{-- @click="item.quantity > 1 ? item.quantity-- : delete cart[idx]" --}}
+                                    <button type="button" @click="decrement()" {{-- @click="item.quantity > 1 ? item.quantity-- : delete cart[idx]" --}}
                                         class="w-6 h-6 text-xs flex items-center justify-center bg-neutral-200 dark:bg-neutral-900 rounded hover:bg-neutral-300 dark:hover:bg-neutral-800 text-black dark:text-white">
                                         -
                                     </button>
@@ -161,8 +158,7 @@ isScrolled = window.scrollY > 0;"
                                     <span class="w-6 text-xs text-center text-black dark:text-white"
                                         x-text="item.quantity"></span>
 
-                                    <button type="button" @click="increment()"
-                                        {{-- @click="item.quantity++" --}}
+                                    <button type="button" @click="increment()" {{-- @click="item.quantity++" --}}
                                         class="w-6 h-6 text-xs flex items-center justify-center bg-neutral-200 dark:bg-neutral-900 rounded hover:bg-neutral-300 dark:hover:bg-neutral-800 text-black dark:text-white">
                                         +
                                     </button>
@@ -190,19 +186,22 @@ isScrolled = window.scrollY > 0;"
                 </template>
                 <div class="flex justify-end">
                     <div class="px-4 py-2 text-sm font-medium text-black dark:text-white">
-                        <p x-text="'Total: $' + Object.values(cart).reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)"></p>
+                        <p
+                            x-text="'Total: $' + Object.values(cart).reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)">
+                        </p>
                     </div>
                 </div>
                 {{-- <form method="POST" action="{{ route('dashboard.shop.checkout') }}">
                     @csrf --}}
-                    <div class="pt-4 border-t border-neutral-300 dark:border-neutral-700">
-                        {{-- <button type="submit" class="w-full flex justify-center px-4 py-2 text-sm font-medium text-white bg-black border border-black rounded-md dark:text-black hover:bg-neutral-800 dark:bg-neutral-100 dark:hover:bg-white hover:border-neutral-800 dark:border-neutral-100 dark:hover:border-white disabled:pointer-events-none disabled:opacity-60">
+                <div class="pt-4 border-t border-neutral-300 dark:border-neutral-700">
+                    {{-- <button type="submit" class="w-full flex justify-center px-4 py-2 text-sm font-medium text-white bg-black border border-black rounded-md dark:text-black hover:bg-neutral-800 dark:bg-neutral-100 dark:hover:bg-white hover:border-neutral-800 dark:border-neutral-100 dark:hover:border-white disabled:pointer-events-none disabled:opacity-60">
                             {{ __('Checkout') }}
                         </button> --}}
-                    <a href="{{ route('dashboard.shop.checkout') }}" class="w-full flex justify-center px-4 py-2 text-sm font-medium text-white bg-black border border-black rounded-md dark:text-black hover:bg-neutral-800 dark:bg-neutral-100 dark:hover:bg-white hover:border-neutral-800 dark:border-neutral-100 dark:hover:border-white disabled:pointer-events-none disabled:opacity-60">
-                            {{ __('Checkout') }}
-                        </a>
-                    </div>
+                    <a href="{{ route('dashboard.shop.checkout') }}"
+                        class="w-full flex justify-center px-4 py-2 text-sm font-medium text-white bg-black border border-black rounded-md dark:text-black hover:bg-neutral-800 dark:bg-neutral-100 dark:hover:bg-white hover:border-neutral-800 dark:border-neutral-100 dark:hover:border-white disabled:pointer-events-none disabled:opacity-60">
+                        {{ __('Checkout') }}
+                    </a>
+                </div>
                 {{-- </form> --}}
             </div>
         </div>
