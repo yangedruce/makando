@@ -57,11 +57,11 @@
                                         </td>
                                         <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
                                             <x-link style="no-hover"
-                                                href="{{ route('dashboard.order.show', $order->id) }}">{{ $order->customer->name ?? __('N/A') }}</x-link>
+                                                href="{{ route('dashboard.order.show', $order->id) }}">{{ $order->customer->name ? $order->customer->name : '-' }}</x-link>
                                         </td>
                                         <td
                                             class="px-4 py-3 text-sm text-left capitalize text-neutral-800 dark:text-neutral-200">
-                                            {{ $order->restaurant->name ?? __('N/A') }}
+                                            {{ $order->restaurant->name ? $order->restaurant->name : '-' }}
                                         </td>
                                         <td class="px-4 py-3 text-sm text-left capitalize">
                                             @if ($order->status === 'New')
@@ -76,17 +76,17 @@
                                                 <span class="bg-red-200 text-red-800 dark:text-red-200 rounded-full py-1 px-3 text-xs font-semibold">Cancelled</span>
                                             @else
                                                 <span class="bg-neutral-200 text-neutral-800 dark:text-neutral-200 rounded-full py-1 px-3 text-xs font-semibold">
-                                                    {{ $order->status }}
+                                                    {{ $order->status ? $order->status : '-' }}
                                                 </span>
                                             @endif
                                         </td>                                        
                                         <td
                                             class="px-4 py-3 text-sm text-left capitalize text-neutral-800 dark:text-neutral-200">
-                                            {{ $order->type }}
+                                            {{ $order->type ? $order->type : '-' }}
                                         </td>
                                         <td
                                             class="px-4 py-3 text-sm text-left capitalize text-neutral-800 dark:text-neutral-200">
-                                            {{ $order->payment_status ?? __('N/A') }}
+                                            {{ $order->payment_status ? $order->payment_status : '-' }}
                                         </td>
                                         <td class="px-4 py-3 text-sm capitalize text-neutral-800 dark:text-neutral-200">
                                             <div class="flex items-center justify-end gap-2">

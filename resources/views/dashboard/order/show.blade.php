@@ -29,11 +29,11 @@
                 <div class="space-y-4">
                     <div>
                         <x-text><strong>Customer:</strong></x-text>
-                        <x-text>{{ $order->customer->name ?? __('N/A') }}</x-text>
+                        <x-text>{{ $order->customer->name ? $order->customer->name : '-' }}</x-text>
                     </div>
                     <div>
                         <x-text><strong>Restaurant:</strong></x-text>
-                        <x-text>{{ $order->restaurant->name ?? __('N/A') }}</x-text>
+                        <x-text>{{ $order->restaurant->name ? $order->restaurant->name : '-' }}</x-text>
                     </div>
                     <div>
                         <x-text class="mb-1"><strong>Status:</strong></x-text>
@@ -63,31 +63,40 @@
                     </div>
                     <div>
                         <x-text><strong>Type:</strong></x-text>
-                        <x-text>{{ ucfirst($order->type) }}</x-text>
+                        <x-text>{{ ucfirst($order->type ? $order->type : '-') }}</x-text>
                     </div>
                     <div>
                         <x-text><strong>Total Price:</strong></x-text>
-                        <x-text>${{ number_format($order->total_price, 2) }}</x-text>
+                        <x-text>${{ number_format($order->total_price ? $order->total_price : '-', 2) }}</x-text>
                     </div>
                     <div>
                         <x-text><strong>Payment Status:</strong></x-text>
-                        <x-text>{{ $order->payment_status ?? __('N/A') }}</x-text>
+                        <x-text>{{ $order->payment_status ? $order->payment_status : '-' }}</x-text>
                     </div>
                     <div>
                         <x-text><strong>Transaction ID:</strong></x-text>
-                        <x-text>{{ $order->transaction_id ?? __('N/A') }}</x-text>
+                        <x-text>{{ $order->transaction_id ? $order->transaction_id : '-' }}</x-text>
                     </div>
                     <div>
                         <x-text><strong>Points:</strong></x-text>
-                        <x-text>{{ $order->points }}</x-text>
+                        <x-text>{{ $order->points ? $order->points : '-' }}</x-text>
                     </div>
                     <div>
                         <x-text><strong>Order Items:</strong></x-text>
-                        @foreach($order->orderItems as $item)
-                            <img src="{{ asset($item->menu->image->path) }}"
-                        alt="Menu Image" class="w-16 h-16 object-cover rounded-lg">
-                            <x-text>{{ $item->menu->name }} {{ $item->quantity }}x ${{ $item->menu->price * $item->quantity  }}</x-text>
-                        @endforeach
+                        @if ($order->orderItems->count() > 0)
+                            @foreach ($order->orderItems as $item)
+                                @isset($item->menu->image->path)
+                                    <img src="{{ asset($item->menu->image->path) }}" alt="Menu Image"
+                                        class="w-16 h-16 object-cover rounded-lg">
+                                @else
+                                    <x-text>{{ __('No Image') }}</x-text>
+                                @endisset
+                                <x-text>{{ $item->menu->name }} {{ $item->quantity }}x
+                                    ${{ $item->menu->price * $item->quantity }}</x-text>
+                            @endforeach
+                        @else
+                            <x-text>{{ __('-') }}</x-text>
+                        @endif
                     </div>
                 </div>
             </div>
