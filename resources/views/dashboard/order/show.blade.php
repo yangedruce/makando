@@ -74,10 +74,6 @@
                         <x-text>{{ $order->payment_status ? $order->payment_status : '-' }}</x-text>
                     </div>
                     <div>
-                        <x-text><strong>Transaction ID:</strong></x-text>
-                        <x-text>{{ $order->transaction_id ? $order->transaction_id : '-' }}</x-text>
-                    </div>
-                    <div>
                         <x-text><strong>Points:</strong></x-text>
                         <x-text>{{ $order->points ? $order->points : '-' }}</x-text>
                     </div>
@@ -104,7 +100,8 @@
             <div class="flex items-center justify-between gap-2 mt-8">
                 <x-link href="{{ route('dashboard.order.index') }}" style="outline">{{ __('Back') }}</x-link>
                 <div class="flex items-center gap-2">
-                    @if (!in_array($order->status, ['Completed', 'Cancelled']))
+                    @if ((auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Restaurant Manager')) &&
+                            !in_array($order->status, ['New', 'Completed', 'Cancelled']))
                         <x-link href="{{ route('dashboard.order.edit', $order->id) }}"
                             style="primary">{{ __('Edit') }}</x-link>
                     @endif

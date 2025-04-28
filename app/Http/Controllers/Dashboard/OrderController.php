@@ -77,19 +77,17 @@ class OrderController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $order = Order::findOrFail($id);
+
         $validated = $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'restaurant_id' => 'required|exists:restaurants,id',
             'status' => 'required|in:New,Pending,Proceeding,Completed,Cancelled',
             'type' => 'required|in:Pickup,Delivery',
-            'total_price' => 'nullable|numeric|min:0',
-            'payment_status' => 'nullable|in:Paid,Unpaid',
-            'transaction_id' => 'nullable|string|max:255',
-            'points' => 'nullable|integer|min:0',
         ]);
 
-        $order = Order::findOrFail($id);
-        $order->update($validated);
+        $order->update([
+            'status' => $validated['status'],
+            'type' => $validated['type'],
+        ]);
 
         return redirect()->route('dashboard.order.index')->with('alert', 'Order updated successfully.');
     }

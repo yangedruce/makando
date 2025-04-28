@@ -110,12 +110,6 @@
                         <x-input-error :messages="$errors->get('payment_status')" />
                     </div>
                     <div class="space-y-2">
-                        <x-label for="transaction_id">{{ __('Transaction ID') }}</x-label>
-                        <x-input id="transaction_id" name="transaction_id" value="{{ old('transaction_id') }}"
-                            placeholder="{{ __('Enter transaction ID') }}" />
-                        <x-input-error :messages="$errors->get('transaction_id')" />
-                    </div>
-                    <div class="space-y-2">
                         <x-label for="points">{{ __('Points') }}</x-label>
                         <x-input type="number" id="points" name="points" min="0" value="{{ old('points', $order->points ?? 0) }}"
                             placeholder="{{ __('Enter points') }}" />

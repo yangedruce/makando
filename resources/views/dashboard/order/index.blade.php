@@ -65,21 +65,27 @@
                                         </td>
                                         <td class="px-4 py-3 text-sm text-left capitalize">
                                             @if ($order->status === 'New')
-                                                <span class="bg-gray-200 text-gray-800 dark:text-gray-200 rounded-full py-1 px-3 text-xs font-semibold">New</span>
+                                                <span
+                                                    class="bg-gray-200 text-gray-800 dark:text-gray-200 rounded-full py-1 px-3 text-xs font-semibold">New</span>
                                             @elseif ($order->status === 'Proceeding')
-                                                <span class="bg-blue-200 text-blue-800 dark:text-blue-200 rounded-full py-1 px-3 text-xs font-semibold">Proceeding</span>
+                                                <span
+                                                    class="bg-blue-200 text-blue-800 dark:text-blue-200 rounded-full py-1 px-3 text-xs font-semibold">Proceeding</span>
                                             @elseif ($order->status === 'Pending')
-                                                <span class="bg-yellow-200 text-yellow-800 dark:text-yellow-200 rounded-full py-1 px-3 text-xs font-semibold">Pending</span>
+                                                <span
+                                                    class="bg-yellow-200 text-yellow-800 dark:text-yellow-200 rounded-full py-1 px-3 text-xs font-semibold">Pending</span>
                                             @elseif ($order->status === 'Completed')
-                                                <span class="bg-green-200 text-green-800 dark:text-green-200 rounded-full py-1 px-3 text-xs font-semibold">Completed</span>
+                                                <span
+                                                    class="bg-green-200 text-green-800 dark:text-green-200 rounded-full py-1 px-3 text-xs font-semibold">Completed</span>
                                             @elseif ($order->status === 'Cancelled')
-                                                <span class="bg-red-200 text-red-800 dark:text-red-200 rounded-full py-1 px-3 text-xs font-semibold">Cancelled</span>
+                                                <span
+                                                    class="bg-red-200 text-red-800 dark:text-red-200 rounded-full py-1 px-3 text-xs font-semibold">Cancelled</span>
                                             @else
-                                                <span class="bg-neutral-200 text-neutral-800 dark:text-neutral-200 rounded-full py-1 px-3 text-xs font-semibold">
+                                                <span
+                                                    class="bg-neutral-200 text-neutral-800 dark:text-neutral-200 rounded-full py-1 px-3 text-xs font-semibold">
                                                     {{ $order->status ? $order->status : '-' }}
                                                 </span>
                                             @endif
-                                        </td>                                        
+                                        </td>
                                         <td
                                             class="px-4 py-3 text-sm text-left capitalize text-neutral-800 dark:text-neutral-200">
                                             {{ $order->type ? $order->type : '-' }}
@@ -92,7 +98,8 @@
                                             <div class="flex items-center justify-end gap-2">
                                                 <x-link
                                                     href="{{ route('dashboard.order.show', $order->id) }}">{{ __('View') }}</x-link>
-                                                @if (!in_array($order->status, ['Completed', 'Cancelled']))
+                                                @if ((auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Restaurant Manager')) &&
+                                                        !in_array($order->status, ['New', 'Completed', 'Cancelled']))
                                                     <x-link
                                                         href="{{ route('dashboard.order.edit', $order->id) }}">{{ __('Edit') }}</x-link>
                                                 @endif
