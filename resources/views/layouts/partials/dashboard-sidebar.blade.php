@@ -28,11 +28,11 @@
             'title' => __('Managements'),
             'permissions' => ['customer:read', 'restaurant:read', 'restaurant-approval:read','category:read','menu:read','item:read'],
         ],
-        // [
-        //     'title' => __('Customer'),
-        //     'route' => 'dashboard.management.customer.index',
-        //     'permissions' => ['customer:read'],
-        // ],
+        [
+            'title' => __('Customer'),
+            'route' => 'dashboard.management.customer.index',
+            'permissions' => ['customer:read'],
+        ],
         [
             'title' => __('Restaurant'),
             'route' => 'dashboard.management.restaurant.index',

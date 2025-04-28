@@ -13,9 +13,19 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::with('customer')->paginate(10); 
+        $user = $request->user();
+
+        if ($user->hasRole('Admin')) {
+            $orders = Order::with('customer')->paginate(10);
+        } elseif ($user->hasRole('Restaurant Manager')) {
+            $orders = Order::whereIn('restaurant_id', $user->restaurants->pluck('id'))->with('customer')->paginate(10);
+        } elseif ($user->hasRole('Customer')) {
+            $orders = Order::where('user_id', $user->id)->with('customer')->paginate(10);
+        } else {
+            abort(403, 'Unauthorized action.');
+        }
 
         return view('dashboard.order.index', compact('orders'));
     }
@@ -57,9 +67,12 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        return view('dashboard.order.show', [
-            'order' => Order::with('customer')->findOrFail($id)
-        ]);
+        $order = Order::with('customer')->findOrFail($id);
+        $user = $order->user;
+        $address = $user->customer->address ?? '-';
+        $phoneNo = $user->customer->phone_no ?? '-';
+
+        return view('dashboard.order.show', compact('order', 'user', 'address', 'phoneNo'));
     }
 
     /**
@@ -67,9 +80,9 @@ class OrderController extends Controller
      */
     public function edit(string $id)
     {
-        return view('dashboard.order.edit', [
-            'order' => Order::with('customer')->findOrFail($id)
-        ]);
+        $order = Order::with('customer')->findOrFail($id);
+
+        return view('dashboard.order.edit', compact('order'));
     }
 
     /**
@@ -117,9 +130,19 @@ class OrderController extends Controller
     /**
      * Get the list of orders for approval.
      */
-    public function getOrderApproval()
+    public function getOrderApproval(Request $request)
     {
-        $orders = Order::where('status', config('constant.status.order.new'))->paginate(10);
+        $user = $request->user();
+
+        if ($user->hasRole('Admin')) {
+            $orders = Order::where('status', config('constant.status.order.new'))->paginate(10);
+        } elseif ($user->hasRole('Restaurant Manager')) {
+            $orders = Order::where('status', config('constant.status.order.new'))
+                ->whereIn('restaurant_id', $user->restaurants->pluck('id'))
+                ->paginate(10);
+        } else {
+            abort(403, 'Unauthorized action.');
+        }
 
         return view('dashboard.order.upcoming.index', compact('orders'));
     }

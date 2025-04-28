@@ -28,8 +28,11 @@
                 </div>
                 <div class="space-y-4">
                     <div>
-                        <x-text><strong>Customer:</strong></x-text>
-                        <x-text>{{ $order->customer->name ? $order->customer->name : '-' }}</x-text>
+                        <x-text><strong>Customer Details:</strong></x-text>
+                        <x-text><span class="font-bold">Name:</span> {{ $order->customer->name ? $order->customer->name : '-' }}</x-text>
+                        <x-text><span class="font-bold">Email:</span> {{ $order->customer->email ? $order->customer->email : '-' }}</x-text>
+                        <x-text><span class="font-bold">Address:</span> {{ $address ? $address : '-' }}</x-text>
+                        <x-text><span class="font-bold">Phone No:</span> {{ $phoneNo ? $phoneNo : '-' }}</x-text>
                     </div>
                     <div>
                         <x-text><strong>Restaurant:</strong></x-text>
@@ -81,7 +84,7 @@
                         <x-text><strong>Order Items:</strong></x-text>
                         @if ($order->orderItems->count() > 0)
                             @foreach ($order->orderItems as $item)
-                                <div class="p-4 bg-neutral-100 dark:bg-neutral-700 rounded mt-4">
+                                <div class="p-4 bg-neutral-100 dark:bg-neutral-700 rounded mt-2">
                                     <div class="flex items-center space-x-4 w-full">
                                         @isset($item->menu->image->path)
                                             <img src="{{ asset($item->menu->image->path) }}" alt="Menu Image"

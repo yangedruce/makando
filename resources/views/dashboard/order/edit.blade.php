@@ -49,6 +49,18 @@
                         <x-input-error :messages="$errors->get('user_id')" />
                     </div>
                     <div class="space-y-2">
+                        <x-label for="email">{{ __('Email') }}</x-label>
+                        <x-input id="email" name="email" value="{{ $order->user->email }}" readonly disabled />
+                    </div>
+                    <div class="space-y-2">
+                        <x-label for="address">{{ __('Address') }}</x-label>
+                        <x-input id="address" name="address" value="{{ $order->user->customer->address ?? '-' }}" readonly disabled />
+                    </div>
+                    <div class="space-y-2">
+                        <x-label for="phone_no">{{ __('Phone Number') }}</x-label>
+                        <x-input id="phone_no" name="phone_no" value="{{ $order->user->customer->phone_no ?? '-' }}" readonly disabled />
+                    </div>
+                    <div class="space-y-2">
                         <x-label for="restaurant_name">{{ __('Restaurant') }}</x-label>
                         <x-input id="restaurant_name" name="restaurant_name" value="{{ $order->restaurant->name }}"
                             readonly disabled />
@@ -134,7 +146,47 @@
                         <x-input type="number" id="points" name="points" value="{{ $order->points }}" readonly disabled
                             placeholder="{{ __('Enter points') }}" />
                         <x-input-error :messages="$errors->get('points')" />
-                    </div>                    
+                    </div>  
+                    <div>
+                        <x-text><strong>Order Items:</strong></x-text>
+                        @if ($order->orderItems->count() > 0)
+                            @foreach ($order->orderItems as $item)
+                                <div class="p-4 bg-neutral-100 dark:bg-neutral-700 rounded mt-2">
+                                    <div class="flex items-center space-x-4 w-full">
+                                        @isset($item->menu->image->path)
+                                            <img src="{{ asset($item->menu->image->path) }}" alt="Menu Image"
+                                                class="w-12 h-12 object-cover rounded" />
+                                        @else
+                                            <x-text class="text-xs">{{ __('No Image') }}</x-text>
+                                        @endisset
+                                        <div class="flex flex-col w-full">
+                                            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-start sm:justify-between w-full sm:gap-4">
+                                                <div class="flex flex-col">
+                                                    <p class="text-sm font-bold text-black dark:text-white">
+                                                        {{ $item->menu->name }}</p>
+                                                    <p class="text-sm text-neutral-600 dark:text-neutral-300">
+                                                        ${{ number_format($item->menu->price, 2) }}
+                                                    </p>
+                                                </div>
+                                                <div class="flex flex-col text-left md:text-right">
+                                                    <p class="text-sm font-medium text-black dark:text-white">
+                                                        {{ $item->quantity }}x</p>
+
+                                                    <p
+                                                        class="text-sm font-medium text-black dark:text-white">
+                                                        <span class="font-bold">Total Price:</span>
+                                                        ${{ number_format($item->menu->price * $item->quantity, 2) }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @else
+                            <x-text>{{ __('-') }}</x-text>
+                        @endif   
+                    </div>               
                 </div>
                 <div class="flex items-center justify-between gap-2 mt-8">
                     <x-link href="{{ route('dashboard.order.index') }}" style="outline">{{ __('Back') }}</x-link>

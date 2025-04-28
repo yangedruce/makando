@@ -13,11 +13,14 @@
 
     <div x-data="{ id: null, name: null }">
         <div class="space-y-4">
-            <div class="flex flex-col items-end justify-end w-full gap-4 lg:items-center sm:flex-row sm:items-center">
-                <x-link href="{{ route('dashboard.management.customer.create') }}" style="primary" class="sm:order-2">
-                    {{ __('Add new customer') }}
-                </x-link>
-            </div>
+            @if (auth()->user()->hasRole('admin'))
+                <div
+                    class="flex flex-col items-end justify-end w-full gap-4 lg:items-center sm:flex-row sm:items-center">
+                    <x-link href="{{ route('dashboard.management.customer.create') }}" style="primary" class="sm:order-2">
+                        {{ __('Add new customer') }}
+                    </x-link>
+                </div>
+            @endif
             <div
                 class="overflow-hidden border divide-y rounded-md border-neutral-200 dark:border-neutral-800 divide-neutral-200 dark:divide-neutral-800">
                 <div class="overflow-x-auto">
@@ -78,19 +81,21 @@
                                                 <x-link
                                                     href="{{ route('dashboard.management.customer.edit', $customer->id) }}">{{ __('Edit') }}</x-link>
 
-                                                <form id="delete-form-{{ $customer->id }}" method="post"
-                                                    class="hidden"
-                                                    action="{{ route('dashboard.management.customer.destroy', $customer->id) }}">
-                                                    @csrf
-                                                    @method('delete')
-                                                </form>
+                                                @if (auth()->user()->hasRole('admin'))
+                                                    <form id="delete-form-{{ $customer->id }}" method="post"
+                                                        class="hidden"
+                                                        action="{{ route('dashboard.management.customer.destroy', $customer->id) }}">
+                                                        @csrf
+                                                        @method('delete')
+                                                    </form>
 
-                                                <x-button style="link" x-data
-                                                    @click="
+                                                    <x-button style="link" x-data
+                                                        @click="
                                                     $dispatch('open-modal', 'confirm-delete');
                                                     id='{{ $customer->id }}';
                                                     name='{{ $customer->user->name }}';
                                                 ">{{ __('Delete') }}</x-button>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>

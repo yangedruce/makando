@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Customer;
+use App\Models\User;
+use App\Models\Restaurant;
+use App\Models\OrderItem;
 
 class Order extends Model
 {
@@ -25,7 +29,7 @@ class Order extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function restaurant()
@@ -42,6 +46,11 @@ class Order extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    // public function customer(): BelongsTo
+    // {
+    //     return $this->belongsTo(Customer::class, 'user_id', 'user_id');
+    // }
 
     public function scopePaid($query)
     {

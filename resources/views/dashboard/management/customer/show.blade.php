@@ -50,21 +50,24 @@
                     <div>
                         <x-text><strong>Total Points:</strong></x-text>
                         <x-text>{{ $customer->total_points ? $customer->total_points : '-' }}</x-text>
-                    </div>                    
+                    </div>
                 </div>
             </div>
 
             <div class="flex items-center justify-between gap-2 mt-8">
-                <x-link href="{{ route('dashboard.management.customer.index') }}" style="outline">{{ __('Back') }}</x-link>
+                <x-link href="{{ route('dashboard.management.customer.index') }}"
+                    style="outline">{{ __('Back') }}</x-link>
                 <div class="flex items-center gap-2">
                     <x-link href="{{ route('dashboard.management.customer.edit', $customer->id) }}"
                         style="primary">{{ __('Edit') }}</x-link>
-                    <x-button style="danger" x-data
-                        @click="
+                    @if (auth()->user()->hasRole('admin'))
+                        <x-button style="danger" x-data
+                            @click="
                             $dispatch('open-modal', 'confirm-delete');
                             id='{{ $customer->id }}';
                             name='{{ $customer->name }}';
                         ">{{ __('Delete') }}</x-button>
+                    @endif
                 </div>
             </div>
         </x-card>

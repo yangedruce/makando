@@ -16,7 +16,18 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::with('user')->paginate(10);
+        $user = auth()->user();
+
+        if ($user->hasRole('Admin')) {
+            $customers = Customer::with(['user.restaurants', 'orders.restaurant'])->paginate(10);
+        } elseif ($user->hasRole('Restaurant Manager')) {
+            $restaurantIds = $user->restaurants->pluck('id');
+            $customers = Customer::whereHas('user.orders', function ($query) use ($restaurantIds) {
+                $query->whereIn('restaurant_id', $restaurantIds);
+            })->with(['user.restaurants', 'orders.restaurant'])->paginate(10);
+        } else {
+            abort(403, 'Unauthorized action.');
+        }
 
         return view('dashboard.management.customer.index', compact('customers'));
     }
