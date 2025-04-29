@@ -58,8 +58,10 @@
                 <x-link href="{{ route('dashboard.management.customer.index') }}"
                     style="outline">{{ __('Back') }}</x-link>
                 <div class="flex items-center gap-2">
-                    <x-link href="{{ route('dashboard.management.customer.edit', $customer->id) }}"
-                        style="primary">{{ __('Edit') }}</x-link>
+                    @if (auth()->user()->hasRole('admin'))
+                        <x-link href="{{ route('dashboard.management.customer.edit', $customer->id) }}"
+                            style="primary">{{ __('Edit') }}</x-link>
+                    @endif
                     {{-- @if (auth()->user()->hasRole('admin'))
                         <x-button style="danger" x-data
                             @click="
