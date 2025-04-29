@@ -82,15 +82,17 @@
             <x-text><span class="font-bold">Points Earned:</span> {{ round($cart->total_price) }}</x-text>
         </div>
 
-        <div class="flex flex-col mt-4">
-            <div class="flex flex-wrap gap-4 md:gap-8">
-                <label class="flex items-center gap-2 text-sm capitalize text-neutral-800 dark:text-neutral-200">
-                    <span>{{ __('Redeem Points') }} <span x-text="totalPoints"></span> ($<span x-text="(totalPoints / 100).toFixed(2)"></span>)</span>
-                    <input type="checkbox" name="redeem_points" value="true" @click="checkRedeemPoints($el)"
-                        class="accent-neutral-800 dark:accent-neutral-200 disabled:pointer-events-none">
-                </label>
+        @if(auth()->user()->customer->total_points > 0)
+            <div class="flex flex-col mt-4">
+                <div class="flex flex-wrap gap-4 md:gap-8">
+                    <label class="flex items-center gap-2 text-sm capitalize text-neutral-800 dark:text-neutral-200">
+                        <span>{{ __('Redeem Points') }} <span x-text="totalPoints"></span> ($<span x-text="(totalPoints / 100).toFixed(2)"></span>)</span>
+                        <input type="checkbox" name="redeem_points" value="true" @click="checkRedeemPoints($el)"
+                            class="accent-neutral-800 dark:accent-neutral-200 disabled:pointer-events-none">
+                    </label>
+                </div>
             </div>
-        </div>
+        @endif
 
         <div class="flex flex-wrap gap-4 items-center justify-center md:justify-between w-full mt-12">
             <x-link href="{{ route('dashboard.shop.index') }}" style="outline">Back to Shop</x-link>
