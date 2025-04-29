@@ -304,3 +304,9 @@ Test cards available via Stripe for testing purposes.
 - Enable customers to leave reviews and ratings for restaurants and menu items.
 - Integrate with delivery services (e.g., Lalamove, GrabExpress) to offer real-time delivery tracking.
 - Build dedicated mobile apps for Customer and Restaurant Manager using Laravel API + Flutter/React Native.
+
+### Bonus Nice-to-Haves
+- Reward customers with badges for milestones (e.g., "First Order", "Frequent Buyer").
+- Allow restaurants to register themselves and upload documents for admin approval.
+- Enable real-time chat between customers and restaurants for customizations or inquiries.
+- Allow customers to favorite restaurants or menu items for quicker access.
