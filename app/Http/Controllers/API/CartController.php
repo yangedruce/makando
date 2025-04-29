@@ -55,7 +55,8 @@ class CartController extends Controller
     public function removeFromCart(Request $request)
     {
         $id = $request->id;
-        $cart = Cart::where('user_id', auth()->user()->id)->first();
+        $menu = Menu::find($id);
+        $cart = Cart::where('user_id', auth()->user()->id)->where('restaurant_id', $menu->restaurant_id)->first();
         $items = json_decode($cart->items, true);
 
         if (isset($items[$id])) {
@@ -76,7 +77,8 @@ class CartController extends Controller
     public function clearFromCart(Request $request)
     {
         $id = $request->id;
-        $cart = Cart::where('user_id', auth()->user()->id)->first();
+        $menu = Menu::find($id);
+        $cart = Cart::where('user_id', auth()->user()->id)->where('restaurant_id', $menu->restaurant_id)->first();
         $items = json_decode($cart->items, true);
 
         if (isset($items[$id])) {

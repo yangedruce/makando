@@ -183,6 +183,10 @@ class ShopController extends Controller
             ]);
         }
 
+        $customer = auth()->user()->customer;
+        $customer->total_points -= $redeem_points;
+        $customer->save();
+
         $cart->delete();
         session()->forget('cart_id');
         

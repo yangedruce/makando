@@ -70,6 +70,7 @@
                                         quantity = cart[id]?.quantity || 0;
                                     }, 100);
                                     $watch('cart', cart => {
+                                        {{-- console.log(JSON.stringify(cart)); --}}
                                         quantity = cart[id]?.quantity || 0;
                                     })"
                                 >
