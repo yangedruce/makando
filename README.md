@@ -285,7 +285,6 @@ Test cards available via Stripe for testing purposes.
 - Send real-time notifications (email/SMS/push) to Customers and Restaurant Managers for order status updates.
 - Add detailed analytics for Restaurant Managers, including sales trends, peak hours, and best-selling items.
 - Allow customers to filter past orders by date, restaurant, and order status.
-- Save carts in the database or local storage so that customers don’t lose their cart if they navigate away.
 - Allow restaurants to mark items as "On Promotion" and highlight discounts in the menu.
 
 ### Mid-Term Features
