@@ -277,7 +277,7 @@ Test cards available via Stripe for testing purposes.
 - This system supports pickup and delivery order types.
 - Restaurants require approval before becoming visible to customers.
 - Admin panel includes restaurant approval and ban features.
-- Loyalty points are accumulated automatically upon successful order payment.
+- Loyalty points are accumulated automatically upon successful order payment and completed order.
 
 ## Future Roadmap
 
