@@ -219,14 +219,58 @@ Test cards available via Stripe for testing purposes.
 
 ## Assumptions and Architecture Decisions
 
-- Separation by Role: Customer, Restaurant Manager, and Admin have distinct permissions and dashboard views.
-- Order Flow: Customers can order from any restaurant, Restaurant Managers only manage their own restaurants.
-- Payment: Stripe is chosen for its ease of integration and testability.
-- Loyalty Program: Simple 1 point = RM1 system, designed to be extendable for future reward schemes. Accumulated points can be redeemed during checkout.
-- Tech Choices:
-    - Laravel for scalable, secure backend.
-    - AlpineJS to keep frontend lightweight and reactive without heavy SPA frameworks.
-    - TailwindCSS for rapid, consistent UI styling.
+### Authentication/Authorization
+- There is a users table and customers table where only Customer have record in customers table.
+- Users are differentiated by roles (Customer, Restaurant Manager, Admin)
+- Role-based permissions control sidebar visibility and accessible routes.
+
+### Admin Specific Role
+- Admin have full system control.
+- Admin can create and update user and customer.
+- Admin can create and update role and permissions.
+
+### Role-Specific Dashboard Content
+- Customer dashboard: Create order, view Order status.
+- Restaurant Manager dashboard: View/manage orders for their restaurants.
+- Admin dashboard: Full system overview (approval, users, roles, restaurants).
+
+### Restaurant Approval Workflow
+- Restaurant Manager can submit restaurant details.
+- Admin must approve a restaurant before it goes live.
+
+### Separation of Concerns
+- "Managements" (Restaurant, Menu, Menu Type) is for Managers/Admin.
+- "Configurations" (User, Role) is strictly Admin-only.
+
+### Multi-Restaurant Support
+- Customer can order from multiple restaurants, but usually one order links to one restaurant at a time.
+- Restaurant Managers can own multiple restaurants.
+
+### Shop
+- Display only active and approved restaurants.
+- Allow filtering by category (e.g., Asian, Western, Desserts).
+- Support search by restaurant name.
+- Show restaurant information: restaurant name, address, category and status (open/closed).
+- Allow direct navigation to view a restaurant’s menu.
+
+### Order Management
+- Customers create orders.
+- Restaurant Managers process orders (accept/reject).
+- Admin oversees all orders if needed.
+
+### Order Cart Behavior
+- Customers have an individual cart for each restaurant.
+- Each restaurant cart can hold multiple menu items.
+- Only the latest cart for the selected restaurant is shown.
+- The active cart is switched only when the customer views a menu from a different restaurant.
+- When a cart is successfully checked out, it is automatically cleared to prevent duplicate orders.
+
+### Payment Gateway
+- Stripe is chosen for its ease of integration and testability.
+
+### Loyalty Program
+- Simple 1 point = RM1 system, designed to be extendable for future reward schemes.
+- Accumulated points can be redeemed during checkout where 1 point = RM0.01.
 
 ## Additional Notes
 
