@@ -47,11 +47,6 @@ class Order extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    // public function customer(): BelongsTo
-    // {
-    //     return $this->belongsTo(Customer::class, 'user_id', 'user_id');
-    // }
-
     public function scopePaid($query)
     {
         return $query->where('payment_status', 'Paid');

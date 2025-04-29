@@ -22,41 +22,4 @@ class WebController extends Controller
     {
         return view('web.index');
     }
-    
-    /**
-     * Display a listing of all product.
-     */
-    public function products(Request $request)
-    {
-        $query = Product::query();
-
-        switch($request->type) {
-            case 'Tyre':
-                $query->where('category_product_type_id', 1);
-                break;
-            case 'Rims':
-                $query->where('category_product_type_id', 2);
-                break;
-            case 'Tyre & Rims':
-                $query->where('category_product_type_id', 3);
-                break;
-            default:
-        }
-            $products = $query->get();
-        return view('web.products')->with([
-            'products' => $products
-        ]);
-    }
-
-    public function details(string $uuid) {
-        $product = Product::where('uuid', $uuid)->first();
-
-        if ($product) {
-            return view('web.details')->with([
-                'product' => $product
-            ]);
-        } else {
-            return redirect()->route('wev.products')->with('alert', __('Product record does not exist!'));
-        }
-    }
 }
