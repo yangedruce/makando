@@ -36,6 +36,118 @@ This project covers key features for Customer, Restaurant Manager, and Administr
 - Storage linking for media (images, etc.).
 - Vite for asset bundling (development and production).
 
+## Project Structure
+
+```
+- app/
+  - helpers.php
+  - Http/
+    - Controllers/
+    - Middleware/
+    - Requests/
+  - Models/
+    - ActivityLog.php
+    - Cart.php
+    - Category.php
+    - CategoryRestaurant.php
+    - Customer.php
+    - Menu.php
+    - MenuImage.php
+    - Order.php
+    - OrderItem.php
+    - Permission.php
+    - PermissionRole.php
+    - RecordLog.php
+    - Restaurant.php
+    - Role.php
+    - RoleUser.php
+    - Type.php
+    - User.php
+  - Notifications/
+    - UserCreated.php
+    - UserPasswordUpdated.php
+  - Observers/
+    - PermissionRoleObserver.php
+    - RoleObserver.php
+    - RoleUserObserver.php
+    - UserObserver.php
+  - Providers/
+    - AppServiceProvider.php
+    - PermissionServiceProvider.php
+  - View/
+    - Components/
+- bootstrap/
+  - app.php
+  - providers.php
+- config/
+  - app.php
+  - auth.php
+  - cache.php
+  - cashier.php
+  - constant.php
+  - database.php
+  - filesystems.php
+  - logging.php
+  - mail.php
+  - queue.php
+  - sanctum.php
+  - services.php
+  - session.php
+- database/
+  - database.sqlite
+  - factories/
+    - UserFactory.php
+  - migrations/
+    - ...
+  - seeders/
+    - ...
+- public/
+  - storage/
+  - android-chrome-192x192.png
+  - android-chrome-512x512.png
+  - apple-touch-icon.png
+  - favicon-16x16.png
+  - favicon-32x32.png
+  - favicon.ico
+  - hot
+  - index.php
+  - robots.txt
+  - site.webmanifest
+  - build/
+    - ...
+  - img/
+- resources/
+  - css/
+  - js/
+  - views/
+- routes/
+  - api.php
+  - auth.php
+  - console.php
+  - web.php
+- storage/
+  - app/
+  - framework/
+  - logs/
+- tests/
+  - TestCase.php
+  - Feature/
+  - Unit/
+- vendor/
+  - ...
+- artisan
+- CHANGELOG.md
+- composer.json
+- composer.lock
+- LICENSE
+- package.json
+- phpunit.xml
+- postcss.config.js
+- README.md
+- tailwind.config.js
+- vite.config.js
+```
+
 ## Installation
 
 Clone this repository to get started.
