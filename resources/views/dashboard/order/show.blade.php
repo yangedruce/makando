@@ -132,7 +132,7 @@
                         <x-link href="{{ route('dashboard.order.edit', $order->id) }}"
                             style="primary">{{ __('Edit') }}</x-link>
                     @endif
-                    @if (!auth()->user()->hasRole('Customer'))
+                    @if (auth()->user()->hasRole('Admin'))
                         <x-button style="danger" x-data
                             @click="
                                 $dispatch('open-modal', 'confirm-delete');
