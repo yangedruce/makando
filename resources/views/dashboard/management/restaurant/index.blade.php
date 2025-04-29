@@ -37,10 +37,10 @@
                                     {{ __('Status') }}
                                 </th>
                                 <th class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
-                                    {{ __('Restaurant Availability') }}
+                                    {{ __('Restaurant Category') }}
                                 </th>
                                 <th class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
-                                    {{ __('Restaurant Category') }}
+                                    {{ __('Restaurant Availability') }}
                                 </th>
                                 <th class="px-4 pr-12 text-sm text-right text-neutral-800 dark:text-neutral-200">
                                     {{ __('Action') }}

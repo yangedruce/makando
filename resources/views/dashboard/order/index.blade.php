@@ -103,7 +103,7 @@
                                                     <x-link
                                                         href="{{ route('dashboard.order.edit', $order->id) }}">{{ __('Edit') }}</x-link>
                                                 @endif
-                                                @if (!auth()->user()->hasRole('Customer'))
+                                                @if (auth()->user()->hasRole('Admin'))
                                                     <form id="delete-form-{{ $order->id }}" method="post"
                                                         class="hidden"
                                                         action="{{ route('dashboard.order.destroy', $order->id) }}">
