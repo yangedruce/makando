@@ -32,7 +32,7 @@ This project covers key features for Customer, Restaurant Manager, and Administr
 
 # System
 - Authentication for all users.
-- Role-based access control for Customer, Manager, and Admin.
+- Role-based access control for Customer, Restaurant Manager, and Admin.
 - Storage linking for media (images, etc.).
 - Vite for asset bundling (development and production).
 
@@ -219,10 +219,10 @@ Test cards available via Stripe for testing purposes.
 
 ## Assumptions and Architecture Decisions
 
-- Separation by Role: Customer, Manager, and Admin have distinct permissions and dashboard views.
-- Order Flow: Customers can order from any restaurant, managers only manage their own restaurants.
+- Separation by Role: Customer, Restaurant Manager, and Admin have distinct permissions and dashboard views.
+- Order Flow: Customers can order from any restaurant, Restaurant Managers only manage their own restaurants.
 - Payment: Stripe is chosen for its ease of integration and testability.
-- Loyalty Program: Simple 1 point = RM1 system, designed to be extendable for future reward schemes.
+- Loyalty Program: Simple 1 point = RM1 system, designed to be extendable for future reward schemes. Accumulated points can be redeemed during checkout.
 - Tech Choices:
     - Laravel for scalable, secure backend.
     - AlpineJS to keep frontend lightweight and reactive without heavy SPA frameworks.
