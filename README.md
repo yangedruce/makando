@@ -278,3 +278,30 @@ Test cards available via Stripe for testing purposes.
 - Restaurants require approval before becoming visible to customers.
 - Admin panel includes restaurant approval and ban features.
 - Loyalty points are accumulated automatically upon successful order payment.
+
+## Future Roadmap
+
+### Short-Term Enhancements
+- Send real-time notifications (email/SMS/push) to Customers and Restaurant Managers for order status updates.
+- Add detailed analytics for Restaurant Managers, including sales trends, peak hours, and best-selling items.
+- Allow customers to filter past orders by date, restaurant, and order status.
+- Save carts in the database or local storage so that customers don’t lose their cart if they navigate away.
+- Allow restaurants to mark items as "On Promotion" and highlight discounts in the menu.
+
+### Mid-Term Features
+- Add support for additional payment methods (e.g., Billplz, PayPal, GrabPay) for Malaysian and Southeast Asian markets.
+- Implement tiered loyalty programs (e.g., Silver, Gold, Platinum) and special discounts based on accumulated points.
+- Automatically set restaurants as closed outside of their configured operating hours.
+- Track key admin actions (approvals, bans, user changes) for security and auditing.
+- Allow admins and restaurant managers to create and manage discount coupons.
+- Enable admins and restaurant managers to initiate refunds through Stripe for canceled or disputed orders.
+- Allow Admins and Restaurant Managers to manually create orders in the system on behalf of walk-in or phone customers. Walk-in orders can skip online payment and optionally be marked as "Paid (Cash)" or "Pending Payment.
+
+### Long-Term Vision
+- Make Makando installable on mobile devices, supporting offline access and push notifications.
+- Introduce subscription plans for restaurants (e.g., Free, Premium) with different commission rates or feature access.
+- Support English, Malay, Chinese for broader market coverage.
+- Allow customers to view and pay in different currencies based on their location.
+- Enable customers to leave reviews and ratings for restaurants and menu items.
+- Integrate with delivery services (e.g., Lalamove, GrabExpress) to offer real-time delivery tracking.
+- Build dedicated mobile apps for Customer and Restaurant Manager using Laravel API + Flutter/React Native.
