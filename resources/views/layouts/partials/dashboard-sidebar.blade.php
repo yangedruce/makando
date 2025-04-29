@@ -130,8 +130,7 @@
 
         <!-- Logo -->
         <x-link href="{{ route('dashboard') }}" class="inline-block mt-4 sm:mt-6 md:hidden">
-            <img src="{{ asset('img/makando-logo.png') }}" alt="Makando Logo" class="w-44 h-auto" />
-            {{-- <span class="text-lg font-bold text-black dark:text-white">{{ config('app.name', 'Makando') }}</span> --}}
+            <x-logo></x-logo>
         </x-link>
 
         <!-- Sidebar menu close button -->

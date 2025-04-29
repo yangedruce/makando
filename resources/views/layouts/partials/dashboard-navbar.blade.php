@@ -30,9 +30,7 @@ isScrolled = window.scrollY > 0;"
             @endif
 
             <x-link href="{{ route('dashboard') }}" class="hidden md:inline-block ">
-                <img src="{{ asset('img/makando-logo.png') }}" alt="Makando Logo"
-                    class="w-44 h-auto" />
-                {{-- <span class="text-lg font-bold text-black dark:text-white">{{ config('app.name', 'Makando') }}</span> --}}
+                <x-logo></x-logo>
             </x-link>
         </div>
 

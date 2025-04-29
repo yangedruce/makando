@@ -27,7 +27,9 @@
     <main>
         <div class="max-w-lg px-4 py-16 mx-auto sm:py-24 lg:py-32 sm:px-6 lg:px-8">
             <div class="flex flex-col">
-                <img src="{{ asset('img/makando-logo.png') }}" alt="Makando Logo" class="w-44 h-auto flex justify-center items-center mx-auto mb-8" />
+                <div class="mb-8">
+                    <x-logo></x-logo>
+                </div>
                 <x-card>
                     {{ $slot }}
                 </x-card>
