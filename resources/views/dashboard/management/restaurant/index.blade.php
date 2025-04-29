@@ -107,11 +107,8 @@
                                             <div class="flex items-center justify-end gap-2">
                                                 <x-link
                                                     href="{{ route('dashboard.management.restaurant.show', $restaurant->id) }}">{{ __('View') }}</x-link>
-                                                @if (
-                                                    (auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Restaurant Manager')) &&
-                                                        $restaurant->status !== 'Pending')
-                                                    <x-link
-                                                        href="{{ route('dashboard.management.restaurant.edit', $restaurant->id) }}">{{ __('Edit') }}</x-link>
+                                                @if (auth()->user()->hasRole('Admin') || (auth()->user()->hasRole('Restaurant Manager') && $restaurant->status !== 'Banned' && $restaurant->status !== 'Pending'))
+                                                    <x-link href="{{ route('dashboard.management.restaurant.edit', $restaurant->id) }}">{{ __('Edit') }}</x-link>
                                                 @endif
                                                 <form id="delete-form-{{ $restaurant->id }}" method="post"
                                                     class="hidden"

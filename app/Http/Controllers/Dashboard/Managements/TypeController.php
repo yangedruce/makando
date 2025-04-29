@@ -108,6 +108,10 @@ class TypeController extends Controller
         $type = Type::findOrFail($id);
         $restaurant = Restaurant::findOrFail($validated['restaurant_id']);
     
+        if ($type->menus()->exists() && $type->restaurant_id != $validated['restaurant_id']) {
+            return redirect()->back()->with('alert', 'Cannot update. This Type has related Menus.');
+        }
+
         $type->update([
             'name' => $validated['name'],
             'restaurant_id' => $validated['restaurant_id'],

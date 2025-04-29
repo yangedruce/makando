@@ -47,6 +47,7 @@
                 <div class="flex items-center justify-between gap-2 mt-8">
                     @empty($role->trashed())
                         <x-link href="{{ route('dashboard.config.user.index') }}" style="outline">{{ __('Back') }}</x-link>
+                        @if(!$user->isAdmin())
                         <div class="flex items-center gap-2">
                             @if ($user->is_editable || $user->is_editable === null)
                                 <x-link href="{{ route('dashboard.config.user.edit', $user->id) }}" style="primary">{{ __('Edit') }}</x-link>
@@ -61,6 +62,7 @@
                                     ">{{ __('Delete') }}</x-button>
                             @endif
                         </div>
+                        @endif
                     @else
                         <x-link href="{{ route('dashboard.config.activity-log.index') }}" style="outline">{{ __('Back') }}</x-link>
                     @endempty

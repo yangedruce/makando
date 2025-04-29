@@ -194,10 +194,10 @@ Route::middleware(['auth', 'verified', 'password', 'validate'])->group(function 
                     Route::get('', [Customer::class, 'index'])->name('index');
                     Route::get('/show/{id}', [Customer::class, 'show'])->name('show');
                 });
-                Route::middleware('permission:customer:create')->group(function () {
-                    Route::get('/create', [Customer::class, 'create'])->name('create');
-                    Route::post('/store', [Customer::class, 'store'])->name('store');
-                });
+                // Route::middleware('permission:customer:create')->group(function () {
+                //     Route::get('/create', [Customer::class, 'create'])->name('create');
+                //     Route::post('/store', [Customer::class, 'store'])->name('store');
+                // });
                 Route::middleware('permission:customer:update')->group(function () {
                     Route::get('/edit/{id}', [Customer::class, 'edit'])->name('edit');
                     Route::patch('/update/{id}', [Customer::class, 'update'])->name('update');

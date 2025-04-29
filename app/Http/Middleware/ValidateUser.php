@@ -22,7 +22,7 @@ class ValidateUser
             return redirect()->route('login');
         }
 
-        if ($user->hasRole('Customer')){
+        if ($user->hasRole('Customer') && $user->customer) {
             if (empty($user->customer->phone_no) || empty($user->customer->address)) {
                 if (!$request->routeIs('profile.edit')) {
                     return redirect()->route('profile.edit')->with('alert', __('Please complete your customer information before proceeding.'));

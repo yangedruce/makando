@@ -161,6 +161,8 @@ Note:
 - Restaurant Manager can submit restaurant details. Restaurants require approval before becoming visible to customers.
 - Admin must approve a restaurant before it goes live. 
 - Admin can ban restaurants in the Admin Panel.
+- Restaurants created by an Admin are automatically assigned an Active status without needing further approval.
+- During restaurant creation, the Admin has the option to select and assign a Manager who will manage the restaurant.
 
 ### Separation of Concerns
 - "Managements" (Restaurant, Menu, Menu Type) is for Managers/Admin.

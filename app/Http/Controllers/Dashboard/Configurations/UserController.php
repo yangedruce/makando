@@ -150,6 +150,10 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
+        if ($user->isAdmin()) {
+            abort(403, 'You cannot edit admin.');
+        }
+
         // If user does not exist.
         if (!$user) {
             return redirect()->back()->with('alert', __('Record does not exist.'));
@@ -174,6 +178,10 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
         $user = User::find($id);
+
+        if ($user->isAdmin()) {
+            abort(403, 'You cannot edit admin.');
+        }
 
         // If user does not exist.
         if (!$user) {
@@ -240,6 +248,10 @@ class UserController extends Controller
         $removeSession = false;
         $user = User::find($id);
         
+        if ($user->isAdmin()) {
+            abort(403, 'You cannot delete admin.');
+        }
+
         // If user does not exist.
         if (!$user) {
             return redirect()->route('dashboard.config.user.index')->with('alert', __('Record does not exist.'));

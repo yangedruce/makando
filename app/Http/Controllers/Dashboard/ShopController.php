@@ -119,7 +119,7 @@ class ShopController extends Controller
             foreach (json_decode($cart->items) as $item) {
                 $lineItems[] = [
                     'price_data' => [
-                        'currency' => 'usd', // or your currency
+                        'currency' => 'usd', 
                         'product_data' => [
                             'name' => $item->name,
                         ],

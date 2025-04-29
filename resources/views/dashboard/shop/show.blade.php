@@ -29,7 +29,7 @@
                     @endif
                 @endforeach
             @else
-                <x-text>{{ __('-') }}</x-text>
+                <span>{{ __('-') }}</span>
             @endif
         </p>
     </div>
@@ -94,32 +94,32 @@
                                     </div>
 
                                     <div class="flex justify-end items-end">
-                                        @if ($menu->is_available)
-                                            @if (auth()->user()->hasRole('Customer'))
-                                                <template x-if="quantity === 0">
-                                                    <button @click="increment()"
-                                                        class="px-4 py-2 text-sm font-medium text-white bg-black border border-black rounded-md dark:text-black hover:bg-neutral-800 dark:bg-neutral-100 dark:hover:bg-white hover:border-neutral-800 dark:border-neutral-100 dark:hover:border-white disabled:pointer-events-none disabled:opacity-60 group">
-                                                        Add to Cart
-                                                    </button>
+                                        @if (auth()->user()->hasRole('Customer'))
+                                            @if ($menu->is_available)
+                                                    <template x-if="quantity === 0">
+                                                        <button @click="increment()"
+                                                            class="px-4 py-2 text-sm font-medium text-white bg-black border border-black rounded-md dark:text-black hover:bg-neutral-800 dark:bg-neutral-100 dark:hover:bg-white hover:border-neutral-800 dark:border-neutral-100 dark:hover:border-white disabled:pointer-events-none disabled:opacity-60 group">
+                                                            Add to Cart
+                                                        </button>
+                                                    </template>
+                                                <template x-if="quantity > 0">
+                                                    <div class="flex items-center space-x-2">
+                                                        <button @click="decrement()"
+                                                            class="w-8 h-8 text-sm flex items-center justify-center bg-neutral-200 dark:bg-neutral-700 rounded hover:bg-neutral-300 dark:hover:bg-neutral-600 text-black dark:text-white">
+                                                            -
+                                                        </button>
+                                                        <span class="w-6 text-sm text-center text-black dark:text-white"
+                                                            x-text="quantity"></span>
+                                                        <button @click="increment()"
+                                                            class="w-8 h-8 text-sm flex items-center justify-center bg-neutral-200 dark:bg-neutral-700 rounded hover:bg-neutral-300 dark:hover:bg-neutral-600 text-black dark:text-white">
+                                                            +
+                                                        </button>
+                                                    </div>
                                                 </template>
+                                            @else
+                                                <span
+                                                    class="px-4 py-2 text-sm font-medium text-gray-500 bg-gray-200 rounded-md">Unavailable</span>
                                             @endif
-                                            <template x-if="quantity > 0">
-                                                <div class="flex items-center space-x-2">
-                                                    <button @click="decrement()"
-                                                        class="w-8 h-8 text-sm flex items-center justify-center bg-neutral-200 dark:bg-neutral-700 rounded hover:bg-neutral-300 dark:hover:bg-neutral-600 text-black dark:text-white">
-                                                        -
-                                                    </button>
-                                                    <span class="w-6 text-sm text-center text-black dark:text-white"
-                                                        x-text="quantity"></span>
-                                                    <button @click="increment()"
-                                                        class="w-8 h-8 text-sm flex items-center justify-center bg-neutral-200 dark:bg-neutral-700 rounded hover:bg-neutral-300 dark:hover:bg-neutral-600 text-black dark:text-white">
-                                                        +
-                                                    </button>
-                                                </div>
-                                            </template>
-                                        @else
-                                            <span
-                                                class="px-4 py-2 text-sm font-medium text-gray-500 bg-gray-200 rounded-md">Unavailable</span>
                                         @endif
                                     </div>
                                 </div>

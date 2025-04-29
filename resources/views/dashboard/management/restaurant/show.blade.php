@@ -93,9 +93,7 @@
                 <x-link href="{{ route('dashboard.management.restaurant.index') }}"
                     style="outline">{{ __('Back') }}</x-link>
                 <div class="flex items-center gap-2">
-                    @if (
-                        (auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Restaurant Manager')) &&
-                            $restaurant->status !== 'Pending')
+                    @if (auth()->user()->hasRole('Admin') || (auth()->user()->hasRole('Restaurant Manager') && $restaurant->status !== 'Banned' && $restaurant->status !== 'Pending'))
                         <x-link href="{{ route('dashboard.management.restaurant.edit', $restaurant->id) }}"
                             style="primary">{{ __('Edit') }}</x-link>
                     @endif

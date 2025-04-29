@@ -35,42 +35,42 @@ class CustomerController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        return view('dashboard.management.customer.create');
-    }
+    // public function create()
+    // {
+    //     return view('dashboard.management.customer.create');
+    // }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
-            'phone_no' => ['required', 'string', 'max:20'],
-            'address' => ['nullable', 'string', 'max:255'],
-            'status' => ['required', Rule::in(['Active', 'Inactive'])],
-            'total_points' => ['nullable', 'integer', 'min:0'],
-        ]);
+    // public function store(Request $request)
+    // {
+    //     $validated = $request->validate([
+    //         'name' => ['required', 'string', 'max:255'],
+    //         'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+    //         'phone_no' => ['required', 'string', 'max:20'],
+    //         'address' => ['nullable', 'string', 'max:255'],
+    //         'status' => ['required', Rule::in(['Active', 'Inactive'])],
+    //         'total_points' => ['nullable', 'integer', 'min:0'],
+    //     ]);
 
-        $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => Hash::make('password'), 
-            'is_force_password_change' => false,
-        ]);
+    //     $user = User::create([
+    //         'name' => $validated['name'],
+    //         'email' => $validated['email'],
+    //         'password' => Hash::make('password'), 
+    //         'is_force_password_change' => false,
+    //     ]);
 
-        Customer::create([
-            'user_id' => $user->id,
-            'phone_no' => $validated['phone_no'],
-            'address' => $validated['address'],
-            'total_points' => $validated['total_points'] ?? 0,
-            'status' => $validated['status'],
-        ]);
+    //     Customer::create([
+    //         'user_id' => $user->id,
+    //         'phone_no' => $validated['phone_no'],
+    //         'address' => $validated['address'],
+    //         'total_points' => $validated['total_points'] ?? 0,
+    //         'status' => $validated['status'],
+    //     ]);
 
-        return redirect()->route('dashboard.management.customer.index')->with('alert', 'Customer created successfully.');
-    }
+    //     return redirect()->route('dashboard.management.customer.index')->with('alert', 'Customer created successfully.');
+    // }
 
     /**
      * Display the specified resource.
@@ -126,14 +126,14 @@ class CustomerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        $customer = Customer::findOrFail($id);
-        $user = $customer->user;
+    // public function destroy(string $id)
+    // {
+    //     $customer = Customer::findOrFail($id);
+    //     $user = $customer->user;
 
-        $customer->delete();
-        $user->delete();
+    //     $customer->delete();
+    //     $user->delete();
 
-        return redirect()->route('dashboard.management.customer.index')->with('alert', 'Customer deleted successfully.');
-    }
+    //     return redirect()->route('dashboard.management.customer.index')->with('alert', 'Customer deleted successfully.');
+    // }
 }

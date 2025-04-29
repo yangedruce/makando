@@ -12,7 +12,7 @@
     @endif
     @include('dashboard.profile.partials.profile-form')
 
-    @if($user->isCustomer())
+    @if($user->isCustomer() && $user->customer)
         @include('dashboard.profile.partials.customer-form')
     @endif
     

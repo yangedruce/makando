@@ -85,9 +85,9 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function isLastSuperAdmin(): bool
     {
-        if ($this->hasRole('super admin')) {
+        if ($this->hasRole('Admin')) {
             $superAdminCount = $this->whereHas('roles', function($query) {
-                $query->where('name', 'super admin');
+                $query->where('name', 'Admin');
             })->count();
 
             if ($superAdminCount <= 1) {

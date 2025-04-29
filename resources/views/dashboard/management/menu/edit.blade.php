@@ -20,12 +20,26 @@
             </div>
             <form method="post" action="{{ route('dashboard.management.menu.update', $menu->id) }}"
                 enctype="multipart/form-data" x-data="{
+                    types: @js(json_decode($menu->restaurant->types)),
+                    currentType: @js($menu->type_id),
                     validateForm() {
                         $el.reportValidity();
                         if ($el.checkValidity()) {
                             $el.submit();
                         }
                     },
+                    getTypes(element) {
+                        axios.post('/type/get', {
+                            restaurant_id: element.value,
+                        }, {
+                            headers: {
+                                'X-CSRF-TOKEN': document.querySelector(`meta[name='csrf-token']`).getAttribute('content')
+                            }
+                        })
+                        .then(response => {
+                            this.types = response.data
+                        })
+                    }
                 }">
                 @csrf
                 @method('patch')
@@ -39,7 +53,7 @@
                     </div>
                     <div class="space-y-2">
                         <x-label for="restaurant_id">{{ __('Restaurant') }}</x-label>
-                        <x-input-select id="restaurant_id" name="restaurant_id">
+                        <x-input-select id="restaurant_id" name="restaurant_id" @change="getTypes($el)">
                             <option value="">{{ __('Select a restaurant') }}</option>
                             @foreach ($restaurants as $restaurant)
                                 <option value="{{ $restaurant->id }}" @selected($menu->restaurant_id === $restaurant->id)>
@@ -65,11 +79,9 @@
                         <x-label for="type_id">{{ __('Type') }}</x-label>
                         <x-input-select id="type_id" name="type_id">
                             <option value="">{{ __('Select a type') }}</option>
-                            @foreach ($types as $type)
-                                <option value="{{ $type->id }}" @selected($menu->type_id == $type->id)>
-                                    {{ $type->name }}
-                                </option>
-                            @endforeach
+                            <template x-for="type in types" :key="type.id">
+                                <option :value="type.id" :selected="type.id == currentType" x-text="type.name"></option>
+                            </template>
                         </x-input-select>
                         <x-input-error :messages="$errors->get('type_id')" />
                     </div>

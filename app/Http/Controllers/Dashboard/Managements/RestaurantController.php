@@ -36,10 +36,13 @@ class RestaurantController extends Controller
         $users = User::whereHas('roles', function ($query) {
             $query->where('name', 'Restaurant Manager');
         })->get();
+
         $categories = Category::where('user_id', auth()->id())->get();
+
         if (auth()->user()->hasRole('Admin')) {
             $categories = Category::all();
         }
+
         return view('dashboard.management.restaurant.create', compact('users', 'categories'));
     }
 
@@ -50,21 +53,24 @@ class RestaurantController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => 'nullable|string',
             'address' => 'required|string',
             'user_id' => auth()->user()->isAdmin() ? 'required|exists:users,id' : '',
         ]);
+
+        $user = auth()->user();
 
         $restaurant = Restaurant::create([
             'name' => $validated['name'],
             'description' => $validated['description'],
             'address' => $validated['address'],
-            'status' => config('constant.status.restaurant.pending'),
+            // 'status' => config('constant.status.restaurant.pending'),
+            'status' => $user->isAdmin() ? config('constant.status.restaurant.active') : config('constant.status.restaurant.pending'),
             'is_opened' => false,
             'user_id' => auth()->user()->isAdmin() ? $validated['user_id'] : auth()->id(),
         ]);
 
-        $categories = $request->input('categories');
+        $categories = $request->input('categories', []);
         foreach ($categories as $category) {
             $restaurant->categories()->attach($category);
         }
@@ -87,11 +93,25 @@ class RestaurantController extends Controller
      */
     public function edit(string $id)
     {
-        $categories = Category::all();
-        return view('dashboard.management.restaurant.edit', [
-            'restaurant' => Restaurant::findOrFail($id),
-            'categories' => $categories
-        ]);
+        $restaurant = Restaurant::findOrFail($id);
+        $user = auth()->user();
+
+        if ($user->hasRole('Restaurant Manager') && $restaurant->status === 'Banned') {
+            abort(403, 'You cannot edit a banned restaurant.');
+        }
+
+        if ($user->hasRole('Admin')) {
+            $categories = Category::where('user_id', $restaurant->user_id)->get();
+            $availableStatuses = config('constant.status.restaurant');
+        } else { 
+            $categories = Category::where('user_id', auth()->id())->get();
+            $availableStatuses = [
+                'Active' => 'Active',
+                'Inactive' => 'Inactive',
+            ];
+        }
+
+        return view('dashboard.management.restaurant.edit', compact('restaurant', 'categories', 'availableStatuses'));
     }
 
     /**
@@ -101,7 +121,7 @@ class RestaurantController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => 'nullable|string',
             'address' => 'required|string',
             'status' => 'required|in:Active,Inactive,Pending,Banned',
             'is_opened' => 'required|boolean',
@@ -123,11 +143,8 @@ class RestaurantController extends Controller
             $updateData['inactive_at'] = null;
         }
 
-        $categories = $request->input('categories');
-        foreach ($categories as $category) {
-            $restaurant->categories()->sync($category);
-        }
-    
+        $restaurant->categories()->sync($request->input('categories', []));
+        
         $restaurant->update($updateData);
     
         return redirect()->route('dashboard.management.restaurant.index')->with('alert', 'Restaurant updated successfully.');

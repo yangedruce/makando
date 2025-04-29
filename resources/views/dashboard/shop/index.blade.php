@@ -97,7 +97,7 @@
                                         {{ $category->name }}@if ($index < count($restaurant->categories) - 1),@endif
                                     @endforeach
                                 @else
-                                    <x-text>{{ __('-') }}</x-text>
+                                    <span>{{ __('-') }}</span>
                                 @endif
                             </p>
                         </div>

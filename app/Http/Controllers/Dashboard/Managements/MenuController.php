@@ -34,12 +34,17 @@ class MenuController extends Controller
      */
     public function create()
     {
-        $types = Type::all();
+        $user = auth()->user();
 
-        if (auth()->user()->hasRole('Admin')) {
+        if ($user->hasRole('Admin')) {
+            $types = Type::all();
             $restaurants = Restaurant::all();
+        } elseif ($user->hasRole('Restaurant Manager')) {
+            $restaurants = Restaurant::where('user_id', $user->id)->get();
+            $restaurantIds = $restaurants->pluck('id');
+            $types = Type::whereIn('restaurant_id', $restaurantIds)->get();
         } else {
-            $restaurants = Restaurant::where('user_id', auth()->id())->get();
+            abort(403, 'Unauthorized action.');
         }
 
         return view('dashboard.management.menu.create', compact('types', 'restaurants'));
@@ -74,7 +79,7 @@ class MenuController extends Controller
     
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('menu_images', 'public');
-            $menu->image()->create(['path' => $path]);
+            $menu->image()->create(['path' => $path, 'name' => $menu->name]);
         }
 
         return redirect()->route('dashboard.management.menu.index')->with('alert', 'Menu created successfully.');
@@ -95,12 +100,17 @@ class MenuController extends Controller
     public function edit(string $id)
     {
         $menu = Menu::with('type')->findOrFail($id);
-        $types = Type::all();
+        $user = auth()->user();
 
-        if (auth()->user()->hasRole('Admin')) {
+        if ($user->hasRole('Admin')) {
+            $types = Type::all();
             $restaurants = Restaurant::all();
+        } elseif ($user->hasRole('Restaurant Manager')) {
+            $restaurants = Restaurant::where('user_id', $user->id)->get();
+            $restaurantIds = $restaurants->pluck('id');
+            $types = Type::whereIn('restaurant_id', $restaurantIds)->get();
         } else {
-            $restaurants = Restaurant::where('user_id', auth()->id())->get();
+            abort(403, 'Unauthorized action.');
         }
 
         return view('dashboard.management.menu.edit', compact('menu', 'types', 'restaurants'));
@@ -130,7 +140,7 @@ class MenuController extends Controller
             'type_id' => $validated['type_id'],
             'restaurant_id' => $validated['restaurant_id'],
             'is_available' => $validated['is_available'],
-            'user_id' => auth()->user()->isAdmin() ?$restaurant->user_id : auth()->id(),
+            'user_id' => auth()->user()->isAdmin() ? $menu->user_id : auth()->id(),
         ]);
     
         if ($request->hasFile('image')) {

@@ -13,14 +13,14 @@
 
     <div x-data="{ id: null, name: null }">
         <div class="space-y-4">
-            @if (auth()->user()->hasRole('admin'))
+            {{-- @if (auth()->user()->hasRole('admin'))
                 <div
                     class="flex flex-col items-end justify-end w-full gap-4 lg:items-center sm:flex-row sm:items-center">
                     <x-link href="{{ route('dashboard.management.customer.create') }}" style="primary" class="sm:order-2">
                         {{ __('Add new customer') }}
                     </x-link>
                 </div>
-            @endif
+            @endif --}}
             <div
                 class="overflow-hidden border divide-y rounded-md border-neutral-200 dark:border-neutral-800 divide-neutral-200 dark:divide-neutral-800">
                 <div class="overflow-x-auto">
@@ -83,7 +83,7 @@
                                                     <x-link
                                                         href="{{ route('dashboard.management.customer.edit', $customer->id) }}">{{ __('Edit') }}</x-link>
 
-                                                    <form id="delete-form-{{ $customer->id }}" method="post"
+                                                    {{-- <form id="delete-form-{{ $customer->id }}" method="post"
                                                         class="hidden"
                                                         action="{{ route('dashboard.management.customer.destroy', $customer->id) }}">
                                                         @csrf
@@ -95,7 +95,7 @@
                                                     $dispatch('open-modal', 'confirm-delete');
                                                     id='{{ $customer->id }}';
                                                     name='{{ $customer->user->name }}';
-                                                ">{{ __('Delete') }}</x-button>
+                                                ">{{ __('Delete') }}</x-button> --}}
                                                 @endif
                                             </div>
                                         </td>
@@ -117,6 +117,6 @@
 
         <x-paginator :data="$customers"></x-paginator>
 
-        @include('dashboard.management.customer.partials.delete-form')
+        {{-- @include('dashboard.management.customer.partials.delete-form') --}}
     </div>
 </x-layouts.dashboard>

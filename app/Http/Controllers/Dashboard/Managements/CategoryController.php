@@ -91,6 +91,10 @@ class CategoryController extends Controller
         ]);
 
         $category = Category::findOrFail($id);
+
+        if ($category->restaurants()->exists() && $category->user_id != $validated['user_id']) {
+            return redirect()->back()->with('alert', 'Cannot update. This Category is linked to Restaurants.');
+        }
     
         $category->update([
             'name' => $validated['name'],

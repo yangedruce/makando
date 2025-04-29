@@ -1,6 +1,22 @@
 @php
     $title = 'Restaurant';
     $subtitle = 'Update restaurant details';
+
+    $user = auth()->user();
+    $availableStatuses = [];
+
+    if ($user->hasRole('Admin')) {
+        $availableStatuses = config('constant.status.restaurant');
+    } elseif ($user->hasRole('Restaurant Manager')) {
+        if ($restaurant->status === 'Banned') {
+            abort(403, 'You cannot edit a banned restaurant.');
+        }
+
+        $availableStatuses = [
+            'Active' => 'Active',
+            'Inactive' => 'Inactive',
+        ];
+    }
 @endphp
 
 <x-layouts.dashboard>
@@ -53,7 +69,7 @@
                     <div class="space-y-2">
                         <x-label for="status">{{ __('Status') }}</x-label>
                         <div class="flex flex-col md:flex-row items-start md:items-center gap-4 xl:gap-8">
-                            @foreach (config('constant.status.restaurant') as $key => $value)
+                            @foreach ($availableStatuses as $key => $value)
                                 @if (!($restaurant->status !== 'Pending' && $value === 'Pending'))
                                     <label
                                         class="flex items-center gap-2 text-sm capitalize text-neutral-800 dark:text-neutral-200">
@@ -99,6 +115,9 @@
                                     <span>{{ $category->name }}</span>
                                 </label>
                             @endforeach
+                            @if ($categories->isEmpty())
+                                <p class="text-sm text-neutral-800 dark:text-neutral-200">-</p>
+                            @endif
                         </div>
                         <x-input-error :messages="$errors->get('categories')" />
                     </div>

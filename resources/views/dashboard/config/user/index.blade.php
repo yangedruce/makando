@@ -127,22 +127,25 @@
                                             <div class="flex items-center justify-end gap-2">
                                                 <x-link
                                                     href="{{ route('dashboard.config.user.show', $user->id) }}">{{ __('View') }}</x-link>
-                                                <x-link
-                                                    href="{{ route('dashboard.config.user.edit', $user->id) }}">{{ __('Edit') }}</x-link>
 
-                                                <form id="delete-form-{{ $user->id }}" method="post"
-                                                    class="hidden"
-                                                    action="{{ route('dashboard.config.user.destroy', $user->id) }}">
-                                                    @csrf
-                                                    @method('delete')
-                                                </form>
+                                                @if(!$user->isAdmin())
+                                                    <x-link
+                                                        href="{{ route('dashboard.config.user.edit', $user->id) }}">{{ __('Edit') }}</x-link>
 
-                                                <x-button style="link" x-data
-                                                    @click="
-                                                    $dispatch('open-modal', 'confirm-delete');
-                                                    id='{{ $user->id }}';
-                                                    name='{{ $user->name }}';
-                                                ">{{ __('Delete') }}</x-button>
+                                                    <form id="delete-form-{{ $user->id }}" method="post"
+                                                        class="hidden"
+                                                        action="{{ route('dashboard.config.user.destroy', $user->id) }}">
+                                                        @csrf
+                                                        @method('delete')
+                                                    </form>
+
+                                                    <x-button style="link" x-data
+                                                        @click="
+                                                        $dispatch('open-modal', 'confirm-delete');
+                                                        id='{{ $user->id }}';
+                                                        name='{{ $user->name }}';
+                                                    ">{{ __('Delete') }}</x-button>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>

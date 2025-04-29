@@ -52,6 +52,11 @@ class Restaurant extends Model
         return $this->hasMany(Menu::class);
     }
 
+    public function types()
+    {
+        return $this->hasMany(Type::class);
+    }
+
     public function orders()
     {
         return $this->hasMany(Order::class);

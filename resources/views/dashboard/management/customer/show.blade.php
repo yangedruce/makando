@@ -60,18 +60,18 @@
                 <div class="flex items-center gap-2">
                     <x-link href="{{ route('dashboard.management.customer.edit', $customer->id) }}"
                         style="primary">{{ __('Edit') }}</x-link>
-                    @if (auth()->user()->hasRole('admin'))
+                    {{-- @if (auth()->user()->hasRole('admin'))
                         <x-button style="danger" x-data
                             @click="
                             $dispatch('open-modal', 'confirm-delete');
                             id='{{ $customer->id }}';
                             name='{{ $customer->name }}';
                         ">{{ __('Delete') }}</x-button>
-                    @endif
+                    @endif --}}
                 </div>
             </div>
         </x-card>
 
-        @include('dashboard.management.customer.partials.delete-form')
+        {{-- @include('dashboard.management.customer.partials.delete-form') --}}
     </div>
 </x-layouts.dashboard>
