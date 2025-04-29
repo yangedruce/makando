@@ -5,7 +5,7 @@ A dashboard-based Food Ordering System built with:
 - Laravel
 - AlpineJS 
 - TailwindCSS 
-Stripe (Payment Gateway)
+- Stripe (Payment Gateway)
 
 This project covers key features for Customer, Restaurant Manager, and Administrator roles, complete with authentication, storage linking, and basic loyalty program functionality.
 
