@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('address');
-            $table->string('status')->default(config('constant.status.restaurant.inactive'));
+            $table->string('status')->default(config('constant.status.restaurant.pending'));
             $table->foreignIdFor(User::class);
             $table->boolean('is_opened')->default(false);
             $table->timestamp('inactive_at')->nullable();

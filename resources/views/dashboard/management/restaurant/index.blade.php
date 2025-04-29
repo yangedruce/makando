@@ -67,7 +67,8 @@
                                                 @if ($restaurant->is_inactive)
                                                     <span
                                                         class="bg-red-200 text-red-800 dark:text-red-800 rounded-full py-1 px-3 text-xs font-semibold">Inactive
-                                                        (7+ days)</span>
+                                                        (7+ days)
+                                                    </span>
                                                 @else
                                                     <span
                                                         class="bg-yellow-200 text-yellow-800 dark:text-yellow-800 rounded-full py-1 px-3 text-xs font-semibold">Inactive
@@ -86,7 +87,7 @@
                                             @endif
                                         </td>
                                         <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
-                                            @if($restaurant->categories->count() > 0)
+                                            @if ($restaurant->categories->count() > 0)
                                                 @foreach ($restaurant->categories as $index => $category)
                                                     {{ $category->name }}@if (!$loop->last)
                                                         ,
@@ -97,13 +98,18 @@
                                             @endif
                                         </td>
                                         <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
-                                            {{ $restaurant->is_opened ? __('Open') : __('Closed') }}
+                                            <span
+                                                class="{{ $restaurant->is_opened ? 'bg-green-200 text-green-800 dark:text-green-800 rounded-full py-1 px-3 text-xs font-semibold' : 'bg-red-200 text-red-800 dark:text-red-800 rounded-full py-1 px-3 text-xs font-semibold' }}">
+                                                {{ $restaurant->is_opened ? 'Open' : 'Closed' }}
+                                            </span>
                                         </td>
                                         <td class="px-4 py-3 text-sm capitalize text-neutral-800 dark:text-neutral-200">
                                             <div class="flex items-center justify-end gap-2">
                                                 <x-link
                                                     href="{{ route('dashboard.management.restaurant.show', $restaurant->id) }}">{{ __('View') }}</x-link>
-                                                @if ((auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Restaurant Manager')) && $restaurant->status !== 'Pending')
+                                                @if (
+                                                    (auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Restaurant Manager')) &&
+                                                        $restaurant->status !== 'Pending')
                                                     <x-link
                                                         href="{{ route('dashboard.management.restaurant.edit', $restaurant->id) }}">{{ __('Edit') }}</x-link>
                                                 @endif

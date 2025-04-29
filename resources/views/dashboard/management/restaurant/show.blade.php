@@ -67,12 +67,15 @@
                     </div>
                     <div>
                         <x-text><strong>Restaurant Availability:</strong></x-text>
-                        <x-text>{{ $restaurant->is_opened ? __('Open') : __('Closed') }}</x-text>
+                        <span
+                            class="{{ $restaurant->is_opened ? 'bg-green-200 text-green-800 dark:text-green-800 rounded-full py-1 px-3 text-xs font-semibold' : 'bg-red-200 text-red-800 dark:text-red-800 rounded-full py-1 px-3 text-xs font-semibold' }}">
+                            {{ $restaurant->is_opened ? 'Open' : 'Closed' }}
+                        </span>
                     </div>
                     <div>
                         <x-text><strong>Categories:</strong></x-text>
                         <x-text>
-                            @if($restaurant->categories->count() > 0)
+                            @if ($restaurant->categories->count() > 0)
                                 @foreach ($restaurant->categories as $index => $category)
                                     {{ $category->name }}@if (!$loop->last)
                                         ,

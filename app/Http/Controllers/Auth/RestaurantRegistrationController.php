@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Restaurant;
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -46,6 +47,7 @@ class RestaurantRegistrationController extends Controller
             'name' => $request->restaurant_name,
             'address' => $request->address, 
             'user_id' => $user->id,
+            'status' => config('constant.status.restaurant.pending'),
         ]);
 
         event(new Registered($user));
