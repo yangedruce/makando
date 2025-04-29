@@ -60,7 +60,7 @@ class DashboardController extends Controller
             return view('dashboard.index', [
                 'role' => 'Customer',
                 'totalSpending' => Order::paid()->completed()->where('user_id', $user->id)->sum('total_price'),
-                'totalPoints' => Order::where('points', '>=', 0)->where('user_id', $user->id)->withItems()->sum('points'), 
+                'totalPoints' => Order::paid()->completed()->where('points', '>=', 0)->where('user_id', $user->id)->withItems()->sum('points'), 
                 'totalOrders' => Order::where('user_id', $user->id)->withItems()->count(),
             ]);
         }
