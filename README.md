@@ -139,6 +139,7 @@ Password: customer123
 Note:
 - All test accounts are pre-seeded during database seeding.
 - You can simulate different role-based views and features by logging in with the respective accounts.
+- You may view the app live [here](https://makando.yangedruce.com)
 
 ## Assumptions and Architecture Decisions
 
