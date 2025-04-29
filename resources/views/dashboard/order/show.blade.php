@@ -43,22 +43,22 @@
                         <x-text>
                             @if ($order->status === 'New')
                                 <span
-                                    class="bg-gray-200 text-gray-800 dark:text-gray-200 rounded-full py-1 px-3 text-xs font-semibold">New</span>
+                                    class="bg-gray-200 text-gray-800 rounded-full py-1 px-3 text-xs font-semibold">New</span>
                             @elseif ($order->status === 'Proceeding')
                                 <span
-                                    class="bg-blue-200 text-blue-800 dark:text-blue-200 rounded-full py-1 px-3 text-xs font-semibold">Proceeding</span>
+                                    class="bg-blue-200 text-blue-800 rounded-full py-1 px-3 text-xs font-semibold">Proceeding</span>
                             @elseif ($order->status === 'Pending')
                                 <span
-                                    class="bg-yellow-200 text-yellow-800 dark:text-yellow-200 rounded-full py-1 px-3 text-xs font-semibold">Pending</span>
+                                    class="bg-yellow-200 text-yellow-800 rounded-full py-1 px-3 text-xs font-semibold">Pending</span>
                             @elseif ($order->status === 'Completed')
                                 <span
-                                    class="bg-green-200 text-green-800 dark:text-green-200 rounded-full py-1 px-3 text-xs font-semibold">Completed</span>
+                                    class="bg-green-200 text-green-800 rounded-full py-1 px-3 text-xs font-semibold">Completed</span>
                             @elseif ($order->status === 'Cancelled')
                                 <span
-                                    class="bg-red-200 text-red-800 dark:text-red-200 rounded-full py-1 px-3 text-xs font-semibold">Cancelled</span>
+                                    class="bg-red-200 text-red-800 rounded-full py-1 px-3 text-xs font-semibold">Cancelled</span>
                             @else
                                 <span
-                                    class="bg-neutral-200 text-neutral-800 dark:text-neutral-200 rounded-full py-1 px-3 text-xs font-semibold">
+                                    class="bg-neutral-200 text-neutral-800 rounded-full py-1 px-3 text-xs font-semibold">
                                     {{ $order->status }}
                                 </span>
                             @endif
