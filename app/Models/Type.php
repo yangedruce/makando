@@ -16,6 +16,7 @@ class Type extends Model
     protected $fillable = [
         'name',
         'restaurant_id',
+        'user_id',
     ];
 
     public function menus()

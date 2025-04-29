@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Restaurant;
 use App\Models\Category;
+use App\Models\User;
 
 class RestaurantController extends Controller
 {
@@ -32,8 +33,14 @@ class RestaurantController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        return view('dashboard.management.restaurant.create', compact('categories'));
+        $users = User::whereHas('roles', function ($query) {
+            $query->where('name', 'Restaurant Manager');
+        })->get();
+        $categories = Category::where('user_id', auth()->id())->get();
+        if (auth()->user()->hasRole('Admin')) {
+            $categories = Category::all();
+        }
+        return view('dashboard.management.restaurant.create', compact('users', 'categories'));
     }
 
     /**
@@ -45,15 +52,16 @@ class RestaurantController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'address' => 'required|string',
+            'user_id' => auth()->user()->isAdmin() ? 'required|exists:users,id' : '',
         ]);
 
-        Restaurant::create([
+        $restaurant = Restaurant::create([
             'name' => $validated['name'],
             'description' => $validated['description'],
             'address' => $validated['address'],
             'status' => config('constant.status.restaurant.pending'),
             'is_opened' => false,
-            'user_id' => auth()->id(), 
+            'user_id' => auth()->user()->isAdmin() ? $validated['user_id'] : auth()->id(),
         ]);
 
         $categories = $request->input('categories');

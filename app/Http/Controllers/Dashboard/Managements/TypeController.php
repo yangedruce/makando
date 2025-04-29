@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\Managements;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Type;
+use App\Models\Restaurant;
 
 class TypeController extends Controller
 {
@@ -33,7 +34,11 @@ class TypeController extends Controller
      */
     public function create()
     {
-        $restaurants = auth()->user()->restaurants ?? collect();
+        if (auth()->user()->hasRole('Admin')) {
+            $restaurants = Restaurant::all();
+        } else {
+            $restaurants = Restaurant::where('user_id', auth()->id())->get();
+        }
 
         return view('dashboard.management.type.create', [
             'restaurants' => $restaurants
@@ -50,7 +55,13 @@ class TypeController extends Controller
             'restaurant_id' => ['required', 'exists:restaurants,id'],
         ]);
     
-        Type::create($validated);
+        $restaurant = Restaurant::findOrFail($validated['restaurant_id']);
+    
+        Type::create([
+            'name' => $validated['name'],
+            'restaurant_id' => $validated['restaurant_id'],
+            'user_id' => auth()->user()->isAdmin() ? $restaurant->user_id : auth()->id(),
+        ]);
     
         return redirect()->route('dashboard.management.type.index')->with('alert', 'Type created successfully.');
     }
@@ -71,7 +82,12 @@ class TypeController extends Controller
     public function edit(string $id)
     {
         $type = Type::findOrFail($id);
-        $restaurants = auth()->user()->restaurants ?? collect();
+
+        if (auth()->user()->hasRole('Admin')) {
+            $restaurants = Restaurant::all();
+        } else {
+            $restaurants = Restaurant::where('user_id', auth()->id())->get();
+        }
 
         return view('dashboard.management.type.edit', [
             'type' => $type,
@@ -90,7 +106,13 @@ class TypeController extends Controller
         ]);
     
         $type = Type::findOrFail($id);
-        $type->update($validated);
+        $restaurant = Restaurant::findOrFail($validated['restaurant_id']);
+    
+        $type->update([
+            'name' => $validated['name'],
+            'restaurant_id' => $validated['restaurant_id'],
+            'user_id' => auth()->user()->isAdmin() ? $restaurant->user_id : auth()->id(),
+        ]);
     
         return redirect()->route('dashboard.management.type.index')->with('alert', 'Type updated successfully.');
     }

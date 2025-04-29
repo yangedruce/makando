@@ -93,14 +93,14 @@
                             @foreach ($categories as $index => $category)
                                 <label for="category-id-{{ $index }}"
                                     class="flex items-center gap-2 text-sm capitalize text-neutral-800 dark:text-neutral-200">
-                                    <input id="category-id-{{ $index }}" type="checkbox" name="category_id[]"
+                                    <input id="category-id-{{ $index }}" type="checkbox" name="categories[]"
                                         value="{{ $category->id }}" class="accent-neutral-800 dark:accent-neutral-200"
                                         @if (in_array($category->id, $restaurant->categories->pluck('id')->toArray())) checked @endif>
                                     <span>{{ $category->name }}</span>
                                 </label>
                             @endforeach
                         </div>
-                        <x-input-error :messages="$errors->get('category_id')" />
+                        <x-input-error :messages="$errors->get('categories')" />
                     </div>
                 </div>
                 <div class="flex items-center justify-between gap-2 mt-8">

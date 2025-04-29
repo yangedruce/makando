@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\Menu;
 use App\Models\Type;
+use App\Models\Restaurant;
 
 class MenuController extends Controller
 {
@@ -34,7 +35,13 @@ class MenuController extends Controller
     public function create()
     {
         $types = Type::all();
-        $restaurants = auth()->user()->restaurants ?? collect();
+
+        if (auth()->user()->hasRole('Admin')) {
+            $restaurants = Restaurant::all();
+        } else {
+            $restaurants = Restaurant::where('user_id', auth()->id())->get();
+        }
+
         return view('dashboard.management.menu.create', compact('types', 'restaurants'));
     }
 
@@ -53,6 +60,7 @@ class MenuController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
+        $restaurant = Restaurant::findOrFail($validated['restaurant_id']);
         $menu = Menu::create([
             'name' => $validated['name'],
             'price' => $validated['price'],
@@ -61,6 +69,7 @@ class MenuController extends Controller
             'restaurant_id' => $validated['restaurant_id'],
             'user_id' => auth()->user()->id,
             'is_available' => $validated['is_available'],
+            'user_id' => auth()->user()->isAdmin() ? $restaurant->user_id : auth()->id(),
         ]);
     
         if ($request->hasFile('image')) {
@@ -87,7 +96,13 @@ class MenuController extends Controller
     {
         $menu = Menu::with('type')->findOrFail($id);
         $types = Type::all();
-        $restaurants = auth()->user()->restaurants ?? collect();
+
+        if (auth()->user()->hasRole('Admin')) {
+            $restaurants = Restaurant::all();
+        } else {
+            $restaurants = Restaurant::where('user_id', auth()->id())->get();
+        }
+
         return view('dashboard.management.menu.edit', compact('menu', 'types', 'restaurants'));
     }
 
@@ -100,7 +115,7 @@ class MenuController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'price' => 'required|numeric|min:0',
+            'price' => 'required|numeric|min:0.5',
             'description' => 'required|string',
             'type_id' => 'required|exists:types,id',
             'restaurant_id' => 'required|exists:restaurants,id',
@@ -115,6 +130,7 @@ class MenuController extends Controller
             'type_id' => $validated['type_id'],
             'restaurant_id' => $validated['restaurant_id'],
             'is_available' => $validated['is_available'],
+            'user_id' => auth()->user()->isAdmin() ?$restaurant->user_id : auth()->id(),
         ]);
     
         if ($request->hasFile('image')) {

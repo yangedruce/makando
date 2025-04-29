@@ -19,9 +19,7 @@ class CategoryController extends Controller
         if ($user->hasRole('Admin')) {
             $categories = Category::with('restaurants', 'manager')->paginate(10);
         } elseif ($user->hasRole('Restaurant Manager')) {
-            $categories = Category::whereHas('restaurants', function ($query) use ($user) {
-                $query->whereIn('id', $user->restaurants->pluck('id'));
-            })->with('restaurants', 'manager')->paginate(10);
+            $categories = Category::where('user_id', $user->id)->paginate(10);
         } else {
             abort(403, 'Unauthorized action.');
         }
@@ -34,7 +32,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $users = User::all(); 
+        $users = User::whereHas('roles', function ($query) {
+            $query->where('name', 'Restaurant Manager');
+        })->get();
         return view('dashboard.management.category.create', compact('users'));
     }
 
@@ -43,15 +43,15 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'user_id' => 'required|exists:users,id',
-
+            'user_id' => auth()->user()->isAdmin() ? 'required|exists:users,id' : '',
         ]);
     
         Category::create([
             'name' => $validated['name'],
-            'user_id' => $validated['user_id'],
+            'user_id' => auth()->user()->isAdmin() ? $validated['user_id'] : auth()->id(),
         ]);
     
         return redirect()->route('dashboard.management.category.index')->with('alert', 'Category created successfully.');
@@ -73,7 +73,9 @@ class CategoryController extends Controller
     public function edit(string $id)
     {
         $category = Category::findOrFail($id);
-        $users = User::all();
+        $users = User::whereHas('roles', function ($query) {
+            $query->where('name', 'Restaurant Manager');
+        })->get();
 
         return view('dashboard.management.category.edit', compact('category', 'users'));
     }
@@ -85,14 +87,14 @@ class CategoryController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'user_id' => 'required|exists:users,id',
+            'user_id' => auth()->user()->isAdmin() ? 'required|exists:users,id' : '',
         ]);
-    
+
         $category = Category::findOrFail($id);
     
         $category->update([
             'name' => $validated['name'],
-            'user_id' => $validated['user_id'],
+            'user_id' => auth()->user()->isAdmin() ? $validated['user_id'] : auth()->id(),
         ]);
     
         return redirect()->route('dashboard.management.category.index')->with('alert', 'Category updated successfully.');

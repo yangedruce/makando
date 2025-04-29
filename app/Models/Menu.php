@@ -20,6 +20,7 @@ class Menu extends Model
         'is_available',
         'restaurant_id',
         'type_id',
+        'user_id',
     ];
 
     public function restaurant()

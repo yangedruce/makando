@@ -78,10 +78,11 @@
                                             <div class="flex items-center justify-end gap-2">
                                                 <x-link
                                                     href="{{ route('dashboard.management.customer.show', $customer->id) }}">{{ __('View') }}</x-link>
-                                                <x-link
-                                                    href="{{ route('dashboard.management.customer.edit', $customer->id) }}">{{ __('Edit') }}</x-link>
 
                                                 @if (auth()->user()->hasRole('admin'))
+                                                    <x-link
+                                                        href="{{ route('dashboard.management.customer.edit', $customer->id) }}">{{ __('Edit') }}</x-link>
+
                                                     <form id="delete-form-{{ $customer->id }}" method="post"
                                                         class="hidden"
                                                         action="{{ route('dashboard.management.customer.destroy', $customer->id) }}">

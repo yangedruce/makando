@@ -27,7 +27,6 @@
                 },
             }">
                 @csrf
-
                 <div class="max-w-xl space-y-4">
                     <div class="space-y-2">
                         <x-label for="name">{{ __('Name') }}</x-label>
@@ -35,21 +34,26 @@
                             placeholder="{{ __('Enter category name') }}" />
                         <x-input-error :messages="$errors->get('name')" />
                     </div>
-                    <div class="space-y-2">
-                        <x-label for="user_id">{{ __('Manager') }}</x-label>
-                        <x-input-select id="user_id" name="user_id">
-                            <option value="">Select Manager</option>
-                            @foreach ($users as $user)
-                                <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>
-                                    {{ $user->name }} ({{ $user->email }})
-                                </option>
-                            @endforeach
-                        </x-input-select>
-                        <x-input-error :messages="$errors->get('user_id')" />
-                    </div>
+
+                    @if (auth()->user()->hasRole('admin'))
+                        <div class="space-y-2">
+                            <x-label for="user_id">{{ __('Manager') }}</x-label>
+                            <x-input-select id="user_id" name="user_id">
+                                <option value="">Select Manager</option>
+                                @foreach ($users as $user)
+                                    <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>
+                                        {{ $user->name }} ({{ $user->email }})
+                                    </option>
+                                @endforeach
+                            </x-input-select>
+                            <x-input-error :messages="$errors->get('user_id')" />
+                        </div>
+                    @endif
                 </div>
+
                 <div class="flex items-center justify-between gap-2 mt-8">
-                    <x-link href="{{ route('dashboard.management.category.index') }}" style="outline">{{ __('Back') }}</x-link>
+                    <x-link href="{{ route('dashboard.management.category.index') }}"
+                        style="outline">{{ __('Back') }}</x-link>
                     <x-button @click="validateForm()">{{ __('Save') }}</x-button>
                 </div>
             </form>
