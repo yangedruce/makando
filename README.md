@@ -1,12 +1,40 @@
-# Makando
+# Makando - Food Ordering System
 
-Source code for Makando.
+A dashboard-based Food Ordering System built with:
 
-Tech stacks:
+- Laravel
+- AlpineJS 
+- TailwindCSS 
+Stripe (Payment Gateway)
 
--   Laravel
--   AlpineJS
--   TailwindCSS
+This project covers key features for Customer, Restaurant Manager, and Administrator roles, complete with authentication, storage linking, and basic loyalty program functionality.
+
+## Features
+
+### Customer
+- View available restaurants with category-based filtering (e.g., Asian, Western, Desserts).
+- View detailed restaurant profiles including menus.
+- Place orders with an option for Pickup or Delivery.
+- Secure online payment integration via Stripe.
+- Earn loyalty points (1 point per RM1 spent) for every order placed.
+
+### Restaurant Manager
+- View and manage incoming orders specific to their restaurants.
+- Accept or Reject customer orders.
+- View Sales Analytics:
+    - Total sales (overall).
+    - Today's sales.
+
+### Administrator
+- Approve newly registered restaurants.
+- Ban or Disable restaurants as needed.
+- (Optional) Dashboard analytics for system monitoring.
+
+# System
+- Authentication for all users.
+- Role-based access control for Customer, Manager, and Admin.
+- Storage linking for media (images, etc.).
+- Vite for asset bundling (development and production).
 
 ## Installation
 
@@ -32,11 +60,23 @@ Execute the following command in project directory for database migration.
 php artisan migrate --seed
 ```
 
+Create storage link (This is required to properly serve uploaded images and files)
+
+```
+php artisan storage:link
+```
+
 Execute the following commands in project directory to run Valet development server.
 
 ```
 valet run
 valet link
+```
+
+Alternatively, you can use for standard local development:
+
+```
+php artisan serve
 ```
 
 This project utilize Vite for source code bundling. To run, execute one of the following commands:
@@ -48,3 +88,34 @@ npm run preview
 ```
 
 Note that `npm run build` command must be executed when running development server.
+
+## Payment Gateway Setup
+
+This project uses Stripe for payment transactions.
+
+You must set your Stripe API keys in .env:
+
+```
+STRIPE_KEY=your_stripe_public_key
+STRIPE_SECRET=your_stripe_secret_key
+```
+
+Test cards available via Stripe for testing purposes.
+
+## Assumptions and Architecture Decisions
+
+- Separation by Role: Customer, Manager, and Admin have distinct permissions and dashboard views.
+- Order Flow: Customers can order from any restaurant, managers only manage their own restaurants.
+- Payment: Stripe is chosen for its ease of integration and testability.
+- Loyalty Program: Simple 1 point = RM1 system, designed to be extendable for future reward schemes.
+- Tech Choices:
+    - Laravel for scalable, secure backend.
+    - AlpineJS to keep frontend lightweight and reactive without heavy SPA frameworks.
+    - TailwindCSS for rapid, consistent UI styling.
+
+## Additional Notes
+
+- This system supports pickup and delivery order types.
+- Restaurants require approval before becoming visible to customers.
+- Admin panel includes restaurant approval and ban features.
+- Loyalty points are accumulated automatically upon successful order payment.
