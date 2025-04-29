@@ -30,12 +30,6 @@ This project covers key features for Customer, Restaurant Manager, and Administr
 - Ban or Disable restaurants as needed.
 - (Optional) Dashboard analytics for system monitoring.
 
-# System
-- Authentication for all users.
-- Role-based access control for Customer, Restaurant Manager, and Admin.
-- Storage linking for media (images, etc.).
-- Vite for asset bundling (development and production).
-
 ## Project Structure
 
 Below is the clickable project structure for easy navigation:
@@ -212,6 +206,50 @@ STRIPE_SECRET=your_stripe_secret_key
 
 Test cards available via Stripe for testing purposes.
 
+## Testing Credentials
+
+Use the following test accounts to access the system with different roles:
+
+### Admin Account
+
+```
+Email: admin@email.com
+Password: admin123
+```
+
+### Restaurant Manager Accounts
+
+```
+Email: manager1@email.com
+Password: manager123
+```
+
+```
+Email: manager2@email.com
+Password: manager123
+```
+
+### Customer Accounts
+
+```
+Email: customer1@email.com
+Password: customer123
+```
+
+```
+Email: customer2@email.com
+Password: customer123
+```
+
+```
+Email: customer3@email.com
+Password: customer123
+```
+
+Note:
+- All test accounts are pre-seeded during database seeding.
+- You can simulate different role-based views and features by logging in with the respective accounts.
+
 ## Assumptions and Architecture Decisions
 
 ### Authentication/Authorization
@@ -230,8 +268,9 @@ Test cards available via Stripe for testing purposes.
 - Admin dashboard: Full system overview (approval, users, roles, restaurants).
 
 ### Restaurant Approval Workflow
-- Restaurant Manager can submit restaurant details.
-- Admin must approve a restaurant before it goes live.
+- Restaurant Manager can submit restaurant details. Restaurants require approval before becoming visible to customers.
+- Admin must approve a restaurant before it goes live. 
+- Admin can ban restaurants in the Admin Panel.
 
 ### Separation of Concerns
 - "Managements" (Restaurant, Menu, Menu Type) is for Managers/Admin.
@@ -250,6 +289,7 @@ Test cards available via Stripe for testing purposes.
 
 ### Order Management
 - Customers create orders.
+- Customers can choose either pickup or delivery order types.
 - Restaurant Managers process orders (accept/reject).
 - Admin oversees all orders if needed.
 
@@ -266,12 +306,6 @@ Test cards available via Stripe for testing purposes.
 ### Loyalty Program
 - Simple 1 point = RM1 system, designed to be extendable for future reward schemes.
 - Accumulated points can be redeemed during checkout where 1 point = RM0.01.
-
-## Additional Notes
-
-- This system supports pickup and delivery order types.
-- Restaurants require approval before becoming visible to customers.
-- Admin panel includes restaurant approval and ban features.
 - Loyalty points are accumulated automatically upon successful order payment and completed order.
 
 ## Future Roadmap
@@ -298,7 +332,7 @@ Test cards available via Stripe for testing purposes.
 - Allow customers to view and pay in different currencies based on their location.
 - Enable customers to leave reviews and ratings for restaurants and menu items.
 - Integrate with delivery services (e.g., Lalamove, GrabExpress) to offer real-time delivery tracking.
-- Build dedicated mobile apps for Customer and Restaurant Manager using Laravel API + Flutter/React Native.
+- Build dedicated mobile apps for Customer and Restaurant Manager using Laravel API + Flutter.
 
 ### Bonus Nice-to-Haves
 - Reward customers with badges for milestones (e.g., "First Order", "Frequent Buyer").
