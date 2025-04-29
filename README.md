@@ -107,12 +107,7 @@ Below is the clickable project structure for easy navigation:
     - ...
 - [public/](public/)
   - [storage/](public/storage/)
-  - [android-chrome-192x192.png](public/android-chrome-192x192.png)
-  - [android-chrome-512x512.png](public/android-chrome-512x512.png)
-  - [apple-touch-icon.png](public/apple-touch-icon.png)
-  - [favicon-16x16.png](public/favicon-16x16.png)
-  - [favicon-32x32.png](public/favicon-32x32.png)
-  - [favicon.ico](public/favicon.ico)
+  - [makando-favicon.png](public/makando-favicon.png)
   - [hot](public/hot)
   - [index.php](public/index.php)
   - [robots.txt](public/robots.txt)
