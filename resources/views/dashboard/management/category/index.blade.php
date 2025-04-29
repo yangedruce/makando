@@ -30,7 +30,7 @@
                                 <th class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
                                     {{ __('Name') }}
                                 </th>
-                                @if(auth()->user()->hasRole('admin'))
+                                @if(auth()->user()->hasRole('Admin'))
                                     <th class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
                                         {{ __('Manager Email') }}
                                     </th>

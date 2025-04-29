@@ -151,7 +151,7 @@ class RestaurantController extends Controller
         if (!$user->hasRole('Admin')) {
             abort(403, 'Unauthorized action.');
         }
-
+        
         $restaurants = Restaurant::where('status', config('constant.status.restaurant.pending'))->paginate(10);
 
         return view('dashboard.management.approval.index', compact('restaurants'));

@@ -23,8 +23,13 @@
                                     {{ __('No') }}
                                 </th>
                                 <th class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
-                                    {{ __('Name') }}
+                                    {{ __('Restaurant Name') }}
                                 </th>
+                                @if(auth()->user()->hasRole('Admin'))
+                                    <th class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
+                                        {{ __('Manager Email') }}
+                                    </th>
+                                @endif
                                 <th class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
                                     {{ __('Status') }}
                                 </th>
@@ -41,6 +46,11 @@
                                         <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
                                             {{ $restaurant->name ? $restaurant->name : '-' }}
                                         </td>
+                                        @if(auth()->user()->hasRole('admin'))
+                                            <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
+                                                {{ $restaurant->user->email ? $restaurant->user->email : '-' }}
+                                            </td>
+                                        @endif
                                         <td class="px-4 py-3 text-sm text-left text-neutral-800 dark:text-neutral-200">
                                             <div class="space-y-2">
                                                 <div class="flex items-center gap-8">
